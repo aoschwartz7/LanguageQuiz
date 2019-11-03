@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+  <head>
+    <title>Quiz</title>
+    <meta charset = "UTF-8" />
+  </head>
+  <body>
+    <h1>Quiz Game: Check Answer</h1>
+    <form method = "GET">
+      <fieldset>
+        <legend>Write this in English</legend>
+        <text> {{term}} </text>
+        <!-- <input name='german_word' type='hidden' value='{{term}}'/> -->
+        <p>
+          <label>your answer:</label>
+          <text> {{user_answer}} </text> <br>
+          <label>correct answer:</label>
+          <text> {{correct_answer}} </text>
+        </p>
+       <button type="submit">Continue</button>
+      </fieldset>
+    </form>
+  </body>
+</html>
