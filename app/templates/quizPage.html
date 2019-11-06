@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<!--Next Steps: comment everything -->
 <html lang = "en">
   <head>
     <title>Quiz</title>
@@ -6,24 +7,26 @@
   </head>
   <body>
     <h1>Quiz Game</h1>
+    <!-- This POST request will submit form containing user_answer and german_word to server so that it's callable in checkAnswer.html page -->
     <form method = "POST">
       <fieldset>
         <legend>Write this in English</legend>
-        <!--show randomized term from wordbank as german_word:  -->
+        <!--random()function from wordBank.py is called in routes.py as "term"; show randomized term from wordbank as german_word-->
         <text> {{term}} </text>
         <!-- when form is submitted, input listed below is submitted as part of request body and becomes callable in routes.py by "name" -->
-        <input name='german_word' type='hidden' value='{{term}}'/>
+        <input name='german_word' type="hidden" value='{{term}}'/>
         <p>
           <label>answer</label>
-          <input name = "user_answer"
-                 type = "text"
-                 id = "answer"
-                 value = "text here" />
+          <input name = "user_answer" type = "text" value = "text here" />
           <text> {{user_answer}} </text>
         </p>
         <!-- create "Check" button and upon click redirect user to /checkAnswer -->
         <button href="checkAnswer.html" type="submit">Check</button>
-        <button type="submit">Next word</button>
+        <!-- create "Next word" button and upon click redirect user to new page of /quizPage -->
+    </form>
+    <!-- This GET request will just render quizPage.html -->
+    <form method = "GET">
+        <button href="quizPage.html" type="submit">Next word</button>
       </fieldset>
     </form>
   </body>
