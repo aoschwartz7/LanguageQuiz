@@ -1,7 +1,6 @@
 from flask import render_template, request
 from app import app
 from wordBank import startgame, random_word, answer
-#Next Steps: comment everything
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/quizpage', methods=['GET', 'POST'])
