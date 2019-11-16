@@ -1,17 +1,14 @@
 #Next steps:
-#1) modify this file so user can play game locally from terminal
-#2) allow user to pick a number of words to be quizzed on
-#3) allow user to save their progress as flash card sets (ie terms they've been quizzed on)
-#4) incorporate entire dictionary
+#1) load new json file for wrong words list
+#2) comment everything new
+#3) camelCase everything (functions and variables and everything)
+#4) name variables like "isUserCorrect"
 
 import json
 import random
 # create instances of wordbank and wordbankkeys
 wordbank = {}
 wordbankkeys = []
-wrongwords = {}
-count = 0
-correct = 0
 
 # function name: startgame
 # inputs aka parameters: NA
@@ -34,33 +31,72 @@ def startgame():
 # outputs/return values: random german word from wordbank
 # this function is called by: routes.py/quizpage
 def random_word():
-    # print(wordbankkeys[random.randint(0, len(wordbankkeys))])
-    return wordbankkeys[random.randint(0, len(wordbankkeys))]
+    return wordbankkeys[random.randint(0, len(wordbankkeys)-1)]
+
+
+#
+def quizsingleword(german_word, correct_answer):
+    user_answer = input("What does {} mean in English? ".format(german_word))
+
+    if correct_answer == user_answer:
+        print("correct! {} means {}".format(german_word, user_answer))
+        return True
+    elif correct_answer != user_answer:
+        print("incorrect. {} means {}".format(german_word, correct_answer))
+        return False
+
 # function name: answer
 # inputs aka parameters: german_word, user_answer
 # application: retrieves the correct_answer from wordbank for comparison to user_answer
 # outputs/return values: returns right answer
 # this function is called by: routes.py/quizpage
-def answer(german_word, user_answer):
+def answer(german_word):
     correct_answer = wordbank[german_word]
     return correct_answer
 
+
+
+
+# function name: game_terminal
+# inputs aka parameters: NA
+# application: allows for local use; retrieves input for user_answer; compares user_answer to german_word;
+              #creates instances of count and correct variables and tracks user performance;
+              #creates wrong_words list for re-testing
+# outputs/return values: N/A
+# this function is called by: wordBank.py
 def game_terminal():
-    count = 0
-    correct = 0
-    for word in wordbank:
-        user_answer = input("What does {} mean in English?".format(german_word))
-        if german_word == user_answer:
-            count += 1
-            correct += 1
-            print("correct! {} means {}".format(german_word, user_answer))
-        elif german_word != user_answer:
-            count += 1
-            wrongwords.append(german_word)
-            print("incorrect. {} means {}".format(german_word, wordbank[german_word]))
+    startgame()
+    random_word()
 
-# def wrongwords():
+    file = open("wrongWordsFromDate.txt", "a+")
 
+    quizwordnum = int(input("How many words would you like to be quizzed on? "))
+
+    for i in range(quizwordnum):
+        german_word = random_word()
+        correct_answer = answer(german_word)
+        userIsCorrect = quizsingleword(german_word, correct_answer)
+        if userIsCorrect == False:
+            file.write('"{}":"{},"'.format(german_word, correct_answer))
+
+
+def retest_wrongwords():
+    requiz = input("Would you like to be quizzed on the words you missed? Y/N ")
+    if requiz in ["Y", "y", "YES", "yes", "yas"]:
+        startgame()
+        file = open("wrongWordsFromDate.txt", "r")
+
+        #here is where I want to call the original json dict by the wrong words list
+        for i in file:
+            #set i equal to german_word and use answer function
+            german_word = i
+            correct_answer = answer(german_word)
+            quizsingleword(german_word, correct_answer)
+
+    else:
+        print("Good work! See you next time. ")
+        quit()
 
 if __name__=="__main__":
     game_terminal()
+    retest_wrongwords()
