@@ -27,9 +27,16 @@ def startGame():
 # parameters: NA
 # application: shuffle wordbank keys and return random word
 # outputs/return values: random german word from wordbank
-# function called by: routes.py/quizpage, gameTerminal()
+# function called by: routes.py/quizpage
 def randomWord():
-    return wordBankKeys[random.randint(0, len(wordBankKeys)-1)]
+    return random.sample(wordBankKeys, 1)[0]
+
+#function name: numRandomWords
+#parameters: num
+#application: apply randomWord() for particular number of words user chooses to be quizzed on
+#function called by: gameTerminal()
+def numRandomWords(num):
+    return random.sample(wordBankKeys, num)
 
 # function name: quizSingleWord
 # parameters: germanWord, correctAnswer
@@ -54,6 +61,23 @@ def answer(germanWord):
     correctAnswer = wordBank[germanWord]
     return correctAnswer
 
+#function name: createTimeStamp
+#parameters: NA
+#application: creates timestamp for naming files
+#outputs/return values: returns timeStampString
+def createTimeStamp():
+    timeStamp = datetime.now()
+    timeStampString = str(timeStamp.year) + str(timeStamp.month) + str(timeStamp.day) + "_" + str(timeStamp.hour) + "." + str(timeStamp.minute)
+    return timeStampString
+
+#function name: createFlashCardSet
+#parameters: newTerm, newDefinition
+#application: allows user to create a new flashcard set; creates new file; appends new vocab to file.
+# def createFlashCardSet(newTerm, newDefinition):
+#     newTerm = input("Enter new term: ")
+#     newDefinition = input("Enter definition for term: ")
+
+
 # function name: gameTerminal
 # parameters: NA
 # application: for local use; retrieves input for userAnswer; compares userAnswer to germanWord; creates text file and appends wrong wrongs for re-testing
@@ -61,34 +85,29 @@ def answer(germanWord):
 # function is called by: wordBank.py
 def gameTerminal():
     startGame()
-    randomWord()
-    timeStamp = datetime.now()
-    timeStampString = str(timeStamp.year) + str(timeStamp.month) + str(timeStamp.day) + "_" + str(timeStamp.hour) + "." + str(timeStamp.minute)
-    print(timeStampString)
-
-    quit()
-
-
-    file = open("wrongWordsFromDate.txt", "a+")
     quizWordNum = int(input("How many words would you like to be quizzed on? "))
+    miniWordBank = numRandomWords(quizWordNum)
     for i in range(quizWordNum):
-        germanWord = randomWord()
+        germanWord = miniWordBank[i]
         correctAnswer = answer(germanWord)
         userIsCorrect = quizSingleWord(germanWord, correctAnswer)
         if userIsCorrect == False:
             wrongWords[germanWord] = correctAnswer
-    json.dump(wrongWords, file)
+    wrongWordsFile = createTimeStamp() + ".json"
+    with open(wrongWordsFile, "a+") as f:
+        json.dump(wrongWords, f)
+    reTestWrongWords(wrongWordsFile)
+
 
 # function name: reTestWrongWords
 # parameters: NA
 # application: run startGame(); open wrongWords text file; user quizSingleWord() to iterate through word bank
 # outputs/return values: N/A
 # function is called by: wordBank.py
-def reTestWrongWords():
+def reTestWrongWords(fileName):
     reQuiz = input("Would you like to be quizzed on the words you missed? Y/N ")
     if reQuiz in ["Y", "y", "YES", "yes", "yas"]:
-        startGame()
-        with open("wrongWordsFromDate.txt") as wrongWordsJson:
+        with open(fileName) as wrongWordsJson:
             wordBank = json.load(wrongWordsJson)
         for i in wordBank:
             germanWord = i
@@ -100,4 +119,3 @@ def reTestWrongWords():
 
 if __name__=="__main__":
     gameTerminal()
-    reTestWrongWords()
