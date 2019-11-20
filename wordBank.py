@@ -1,5 +1,7 @@
 #Next steps:
 #1) rename wordBank.py
+#2) ask user which set to get quizzed on
+
 
 import json
 import random
@@ -9,6 +11,7 @@ from datetime import datetime
 wordBank = {}
 wordBankKeys = []
 wrongWords = {}
+newCardSet = {}
 
 # function name: startgame
 # parameters: NA
@@ -73,10 +76,21 @@ def createTimeStamp():
 #function name: createFlashCardSet
 #parameters: newTerm, newDefinition
 #application: allows user to create a new flashcard set; creates new file; appends new vocab to file.
-# def createFlashCardSet(newTerm, newDefinition):
-#     newTerm = input("Enter new term: ")
-#     newDefinition = input("Enter definition for term: ")
-
+def createFlashCardSet():
+    setName = input("Enter a name for this set: ")
+    print("Enter 'done' when finished")
+    while True:
+        newTerm = input("Enter new term: ")
+        if newTerm == "done":
+            break
+        newDefinition = input("Enter definition for term: ")
+        if newDefinition == "done":
+            break
+        print("adding %s : %s" % (newTerm, newDefinition))
+        newCardSet[newTerm] = newDefinition
+    cardSetFile = createTimeStamp() + "_" + setName + ".json"
+    with open(cardSetFile, "a+") as f:
+        json.dump(newCardSet, f)
 
 # function name: gameTerminal
 # parameters: NA
@@ -85,6 +99,7 @@ def createTimeStamp():
 # function is called by: wordBank.py
 def gameTerminal():
     startGame()
+    print("Launching quiz...")
     quizWordNum = int(input("How many words would you like to be quizzed on? "))
     miniWordBank = numRandomWords(quizWordNum)
     for i in range(quizWordNum):
@@ -118,4 +133,5 @@ def reTestWrongWords(fileName):
         quit()
 
 if __name__=="__main__":
+    createFlashCardSet()
     gameTerminal()
