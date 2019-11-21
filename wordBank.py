@@ -2,12 +2,12 @@
 #1) rename wordBank.py
 #2) ask user which set to get quizzed on
 
-
 import json
 import random
 from datetime import datetime
+import glob, os #this is for accessFiles()
 
-# create instances of wordBank and wordBankKeys
+# create dict/list instances
 wordBank = {}
 wordBankKeys = []
 wrongWords = {}
@@ -73,6 +73,24 @@ def createTimeStamp():
     timeStampString = str(timeStamp.year) + str(timeStamp.month) + str(timeStamp.day) + "_" + str(timeStamp.hour) + "." + str(timeStamp.minute)
     return timeStampString
 
+#function name: openFile
+#parameters: NA
+#application: prints file names containing wordbanks for quizzes, asks user to select one for quiz, opens that file and begins gameTerminal()
+#outputs: NA
+def accessFiles():
+    #search within directory for file titles that have been timestamped and return them to user
+    #ask user to select a file of interest
+    #run startGame() with this file
+    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
+    for file in glob.glob("*.json"):
+        print(file)
+    answer = input("Which flashcard set would you like to open?\n")
+    with open(answer) as jsonFile:
+        wordBank = json.load(jsonFile)
+    wordBankKeys = list(wordBank.keys())
+    print(wordBank)
+    quit()
+
 #function name: createFlashCardSet
 #parameters: newTerm, newDefinition
 #application: allows user to create a new flashcard set; creates new file; appends new vocab to file.
@@ -113,7 +131,6 @@ def gameTerminal():
         json.dump(wrongWords, f)
     reTestWrongWords(wrongWordsFile)
 
-
 # function name: reTestWrongWords
 # parameters: NA
 # application: run startGame(); open wrongWords text file; user quizSingleWord() to iterate through word bank
@@ -133,5 +150,6 @@ def reTestWrongWords(fileName):
         quit()
 
 if __name__=="__main__":
+    accessFiles()
     createFlashCardSet()
     gameTerminal()
