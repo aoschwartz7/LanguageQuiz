@@ -2,11 +2,21 @@
 <!--Next Steps: comment everything -->
 <html lang = "en">
   <head>
+    <!-- include Bootstrap to load CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+    .center {
+      margin: auto; width: 60%; border: 3px solid #73AD21; padding: 10px;
+    }
+    </style>
     <title>Quiz</title>
     <meta charset = "UTF-8" />
   </head>
   <body>
-    <h1>Quiz Game: Check Answer</h1>
+    <div align = "center">
+    <h1>Quiz Game</h1>
+    </div>
+    <div class="center">
     <!-- This GET request will present data submitted via previous POST request -->
     <form method = "GET">
       <fieldset>
@@ -14,12 +24,13 @@
         <text> {{term}} </text>
         <p>
           <label>your answer:</label>
-          <text> {{user_answer}} </text> <br>
+          <text> {{userAnswer}} </text> <br>
           <label>correct answer:</label>
-          <text> {{correct_answer}} </text>
+          <text> {{correctAnswer}} </text>
         </p>
        <button type="submit">Continue</button>
       </fieldset>
     </form>
+  </div>
   </body>
 </html>

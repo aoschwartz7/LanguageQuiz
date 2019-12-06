@@ -1,6 +1,6 @@
 from flask import render_template, request
 from app import app
-from wordBank import startGame, randomWord answer
+from wordBank import startGame, randomWord, answer
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/quizPage', methods=['GET', 'POST'])
@@ -15,4 +15,4 @@ def quizPage():
     if request.method == "POST":
         germanWord = request.form['germanWord']
         userAnswer = request.form['userAnswer']
-        return render_template('checkAnswer.html', title='Quiz', term=germanWord, user_answer=userAnswer, correct_answer=answer(germanWord, userAnswer))
+        return render_template('checkAnswer.html', title='Quiz', term=germanWord, userAnswer=userAnswer, correctAnswer=answer(germanWord))

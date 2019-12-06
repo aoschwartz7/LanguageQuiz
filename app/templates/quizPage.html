@@ -1,11 +1,22 @@
 <!DOCTYPE HTML>
 <html lang = "en">
   <head>
+    <!-- include Bootstrap to load CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+    .center {
+      margin: auto; width: 60%; border: 3px solid #73AD21; padding: 10px;
+    }
+    </style>
     <title>Quiz</title>
     <meta charset = "UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
   <body>
+    <div align = "center">
     <h1>Quiz Game</h1>
+    </div>
+    <div class="center">
     <!-- This POST request will submit form containing user_answer and german_word to server so that it's callable in checkAnswer.html page -->
     <form method = "POST">
       <fieldset>
@@ -13,11 +24,11 @@
         <!--random()function from wordBank.py is called in routes.py as "term"; show randomized term from wordbank as german_word-->
         <text> {{term}} </text>
         <!-- when form is submitted, input listed below is submitted as part of request body and becomes callable in routes.py by "name" -->
-        <input name='german_word' type="hidden" value='{{term}}'/>
+        <input name='germanWord' type="hidden" value='{{term}}'/>
         <p>
           <label>answer</label>
-          <input name = "user_answer" type = "text" value = "text here" />
-          <text> {{user_answer}} </text>
+          <input name = "userAnswer" type = "text" value = "text here" />
+          <text> {{userAnswer}} </text>
         </p>
         <!-- create "Check" button and upon click redirect user to /checkAnswer -->
         <button href="checkAnswer.html" type="submit">Check</button>
@@ -28,5 +39,6 @@
         <button href="quizPage.html" type="submit">Next word</button>
       </fieldset>
     </form>
+  </div>
   </body>
 </html>
