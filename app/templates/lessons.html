@@ -62,15 +62,15 @@
     <form method = "GET">
       <fieldset>
         <legend>Select a lesson:</legend>
-        <select name= lesson method="GET" action="/">
+        <!--  here might be where I need to refer to Spanish/German expressions-->
+        <select name=lesson method="GET" action="/">
+          <!--  'lessons' passed in from routes.py -->
             {% for lesson in lessons %}
             <option value= "{{lesson}}" SELECTED>{{lesson}}</option>"
             {% endfor %}
         </select>
 
-
-
-
+        <!-- is fieldset needed? I do not know  -->
         </fieldset>
         <!-- create "Next word" button and upon click redirect user to new page of /quizPage -->
     </form>

@@ -1,7 +1,6 @@
 #Next steps:
 #1) rename wordBank.py
-#2) ask user which set to get quizzed on
-#3)
+
 
 import json
 import random
@@ -16,8 +15,8 @@ newCardSet = {}
 
 # function name: startgame
 # parameters: NA
-# application: load JSON dictionary as a variable; create global variables for use across multiple functions;
-# create list of wordbank keys so they can be shuffled in random_word function
+# application: load JSON dictionary as a variable; uses global variables for use across multiple functions;
+#              creates list of wordbank keys
 # outputs/return values: NA
 # this function is called by: routes.py/quizpage, gameTerminal(), reTestWrongWords()
 def startGame():
@@ -27,9 +26,22 @@ def startGame():
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
 
-# function name: random_word
+# function name: getVocabFiles
+# application: get names of existing vocabulary files ...
+# TODO more comments to match other functions
+def getVocabFiles(language):
+    fileNames = []
+    #change the current working directory to the given path
+    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/" + language)
+    # TODO don't need a loop here...
+    # TODO fileNames = glob.glob("*.json")
+    for file in glob.glob("*.json"):
+        fileNames.append(file)
+    return fileNames
+
+# function name: randomWord
 # parameters: NA
-# application: shuffle wordbank keys and return random word
+# application: shuffle wordbank keys and return random word <<-- TODO
 # outputs/return values: random german word from wordbank
 # function called by: routes.py/quizpage
 def randomWord():
@@ -38,22 +50,28 @@ def randomWord():
 #function name: numRandomWords
 #parameters: num
 #application: apply randomWord() for particular number of words user chooses to be quizzed on
+# TODO ^??
 #function called by: gameTerminal()
 def numRandomWords(num):
     return random.sample(wordBankKeys, num)
 
+
+# TODO organize this file, separate funcs used for GUI game and terminal game
+# with a barrier e.g.----------------------------
+
+
 # function name: quizSingleWord
-# parameters: germanWord, correctAnswer
-# application: quizzes user on germanWord; compares userAnswer to correctAnswer
+# parameters: vocabTerm, correctAnswer
+# application: quizzes user on vocabTerm; compares userAnswer to correctAnswer
 # outputs/return values: Boolean T/F
 # function called by: gameTerminal(), reTestWrongWords()
-def quizSingleWord(germanWord, correctAnswer):
-    userAnswer = input("What does {} mean in English? ".format(germanWord))
+def quizSingleWord(vocabTerm, correctAnswer):
+    userAnswer = input("What does {} mean in English? ".format(vocabTerm))
     if userAnswer == correctAnswer:
-        print("correct! {} means {}".format(germanWord, userAnswer))
+        print("correct! {} means {}".format(vocabTerm, userAnswer))
         return True
     elif userAnswer != correctAnswer:
-        print("incorrect. {} means {}".format(germanWord, correctAnswer))
+        print("incorrect. {} means {}".format(vocabTerm, correctAnswer))
         return False
 
 # function name: answer
@@ -61,8 +79,8 @@ def quizSingleWord(germanWord, correctAnswer):
 # application: retrieves the correct_answer from wordbank for comparison to user_answer
 # outputs/return values: returns right answer
 # function is called by: routes.py/quizpage, gameTerminal(), reTestWrongWords()
-def answer(germanWord):
-    correctAnswer = wordBank[germanWord]
+def answer(vocabTerm):
+    correctAnswer = wordBank[vocabTerm]
     return correctAnswer
 
 #function name: createTimeStamp
@@ -102,6 +120,7 @@ def accessFiles():
     #ask user to select a file of interest
     #run startGame() with this file
     os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
+    # TODO don't need loop
     for file in glob.glob("*.json"):
         print(file)
     answer = input("Which flashcard set would you like to open? \n")
@@ -111,7 +130,7 @@ def accessFiles():
 
 # function name: gameTerminal
 # parameters: NA
-# application: for local use; retrieves input for userAnswer; compares userAnswer to germanWord; creates text file and appends wrong wrongs for re-testing
+# application: for local use; retrieves input for userAnswer; compares userAnswer to vocabTerm; creates text file and appends wrong wrongs for re-testing
 # outputs/return values: N/A
 # function is called by: wordBank.py
 def gameTerminal():
@@ -120,11 +139,11 @@ def gameTerminal():
     quizWordNum = int(input("How many words would you like to be quizzed on? "))
     miniWordBank = numRandomWords(quizWordNum)
     for i in range(quizWordNum):
-        germanWord = miniWordBank[i]
-        correctAnswer = answer(germanWord)
-        userIsCorrect = quizSingleWord(germanWord, correctAnswer)
+        vocabTerm = miniWordBank[i]
+        correctAnswer = answer(vocabTerm)
+        userIsCorrect = quizSingleWord(vocabTerm, correctAnswer)
         if userIsCorrect == False:
-            wrongWords[germanWord] = correctAnswer
+            wrongWords[vocabTerm] = correctAnswer
     wrongWordsFile = createTimeStamp() + ".json"
     with open(wrongWordsFile, "a+") as f:
         json.dump(wrongWords, f)
@@ -141,13 +160,14 @@ def reTestWrongWords(fileName):
         with open(fileName) as wrongWordsJson:
             wordBank = json.load(wrongWordsJson)
         for i in wordBank:
-            germanWord = i
-            correctAnswer = answer(germanWord)
-            quizSingleWord(germanWord, correctAnswer)
+            vocabTerm = i
+            correctAnswer = answer(vocabTerm)
+            quizSingleWord(vocabTerm, correctAnswer)
     else:
         print("Good work! See you next time. ")
         quit()
 
+# TODO comment here to say when this code would run 
 if __name__=="__main__":
     createFlashCardSet()
     accessFiles()
