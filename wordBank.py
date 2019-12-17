@@ -19,24 +19,24 @@ newCardSet = {}
 #              creates list of wordbank keys
 # outputs/return values: NA
 # this function is called by: routes.py/quizpage, gameTerminal(), reTestWrongWords()
-def startGame():
+def startGame(lessonFile):
     global wordBank
     global wordBankKeys
-    with open('test.json') as jsonFile:
+    # TODO use os.chdir to navigate to German or Spanish lessons directory
+    with open(lessonFile + '.json') as jsonFile:
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
+    # do i need to return a value for Flask here?
+
 
 # function name: getVocabFiles
 # application: get names of existing vocabulary files ...
 # TODO more comments to match other functions
 def getVocabFiles(language):
-    fileNames = []
     #change the current working directory to the given path
     os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/" + language)
-    # TODO don't need a loop here...
-    # TODO fileNames = glob.glob("*.json")
-    for file in glob.glob("*.json"):
-        fileNames.append(file)
+    fileNames = glob.glob("*.json")
+    fileNames = [filename.strip('.json') for filename in fileNames]
     return fileNames
 
 # function name: randomWord
@@ -105,7 +105,7 @@ def createFlashCardSet():
         newDefinition = input("Enter definition for term: ")
         if newDefinition == "done":
             break
-        print("adding %s : %s" % (newTerm, newDefinition))
+        print("adding %s : %s\n" % (newTerm, newDefinition))
         newCardSet[newTerm] = newDefinition
     cardSetFile = createTimeStamp() + "_" + setName + ".json"
     with open(cardSetFile, "a+") as f:
@@ -167,7 +167,7 @@ def reTestWrongWords(fileName):
         print("Good work! See you next time. ")
         quit()
 
-# TODO comment here to say when this code would run 
+# TODO comment here to say when this code would run
 if __name__=="__main__":
     createFlashCardSet()
     accessFiles()

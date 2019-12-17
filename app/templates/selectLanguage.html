@@ -10,27 +10,25 @@
     .quizBox {
       margin: auto; background-color: white; width: 40%; border: 5px solid #34A853; padding: 10px;
     }
-
     </style>
     <title>Quiz</title>
     <meta charset = "UTF-8" />
   </head>
   <body style = "background-color:#1a1269;">
     <div align = "center">
-    <!-- add whitespace to top -->
+    <!-- add whitespace to top of page: -->
     <p class="ex1"></p>
     </div>
     <div class="quizBox">
     <!-- This GET request will present user with a selection for language and vocabulary lesson -->
     <!-- Once user selects language and lesson, rediect user to new page of /quizPage and use corresponding json file as wordBank-->
-    <form method = "POST">
+    <form action="/selectLesson" method = "POST">
       <fieldset>
         <legend>Welcome to my Vocabulary Quiz Game! <br>Select a language you wish to study:</legend>
         <!--  TODO insert values from passed-in list -->
-        <button href="lessons.html" type="submit" name="language" value="German">German</button>
-        <button href="lessons.html" type="submit" name="language" value="Spanish">Spanish</button>
+        <button type="submit" name="language" value="German">German</button>
+        <button type="submit" name="language" value="Spanish">Spanish</button>
       </fieldset>
-        <!-- create "Next word" button and upon click redirect user to new page of /quizPage -->
     </form>
       </div>
   </body>
