@@ -1,11 +1,12 @@
 #Next steps:
-#1) rename wordBank.py
+# -rename wordBank.py
+# -separate code based on what's Flask versus locally supported code
 
 
 import json
 import random
 from datetime import datetime
-import glob, os #this is for accessFiles()
+import glob, os
 
 # create dict/list instances
 wordBank = {}
@@ -13,25 +14,25 @@ wordBankKeys = []
 wrongWords = {}
 newCardSet = {}
 
-# function name: startgame
-# parameters: NA
-# application: load JSON dictionary as a variable; uses global variables for use across multiple functions;
-#              creates list of wordbank keys
+# function name: startGame()
+# parameters: lessonFile
+# application: load JSON dictionary from the file lessonFile as a variable;
+# creates list of wordBank keys for quiz randomization via randomWord()
 # outputs/return values: NA
-# this function is called by: routes.py/quizpage, gameTerminal(), reTestWrongWords()
+# called by: routes.py/loadLesson, gameTerminal(), reTestWrongWords()
 def startGame(lessonFile):
     global wordBank
     global wordBankKeys
-    # TODO use os.chdir to navigate to German or Spanish lessons directory
     with open(lessonFile + '.json') as jsonFile:
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
-    # do i need to return a value for Flask here?
 
-
-# function name: getVocabFiles
-# application: get names of existing vocabulary files ...
-# TODO more comments to match other functions
+# function name: getVocabFiles()
+# parameters: language
+# application: get existing .json fileNames vocab dictionaries when \
+# user selects a language in routes.py/loadLesson
+# outputs/return values: fileNames
+# called by: routes.py/selectLesson
 def getVocabFiles(language):
     #change the current working directory to the given path
     os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/" + language)
@@ -39,30 +40,28 @@ def getVocabFiles(language):
     fileNames = [filename.strip('.json') for filename in fileNames]
     return fileNames
 
-# function name: randomWord
+# function name: randomWord()
 # parameters: NA
-# application: shuffle wordbank keys and return random word <<-- TODO
-# outputs/return values: random german word from wordbank
-# function called by: routes.py/quizpage
+# application: return a random word from wordBank keys
+# outputs/return values: random word
+# function called by: routes.py/quizPage
 def randomWord():
     return random.sample(wordBankKeys, 1)[0]
 
 #function name: numRandomWords
 #parameters: num
 #application: apply randomWord() for particular number of words user chooses to be quizzed on
-# TODO ^??
 #function called by: gameTerminal()
 def numRandomWords(num):
     return random.sample(wordBankKeys, num)
 
 
-# TODO organize this file, separate funcs used for GUI game and terminal game
-# with a barrier e.g.----------------------------
 
-
-# function name: quizSingleWord
+    #### The following lines of code provide for local use of Quiz Game in Terminal ####
+# ---------------------------------------------------------------------------------------------------------
+# function name: quizSingleWord()
 # parameters: vocabTerm, correctAnswer
-# application: quizzes user on vocabTerm; compares userAnswer to correctAnswer
+# application: quizzes user on vocabTerm and compares userAnswer to correctAnswer
 # outputs/return values: Boolean T/F
 # function called by: gameTerminal(), reTestWrongWords()
 def quizSingleWord(vocabTerm, correctAnswer):
@@ -74,27 +73,22 @@ def quizSingleWord(vocabTerm, correctAnswer):
         print("incorrect. {} means {}".format(vocabTerm, correctAnswer))
         return False
 
-# function name: answer
-# parameters: german_word, user_answer
-# application: retrieves the correct_answer from wordbank for comparison to user_answer
-# outputs/return values: returns right answer
-# function is called by: routes.py/quizpage, gameTerminal(), reTestWrongWords()
-def answer(vocabTerm):
-    correctAnswer = wordBank[vocabTerm]
-    return correctAnswer
-
-#function name: createTimeStamp
+#function name: createTimeStamp()
 #parameters: NA
-#application: creates timestamp for naming files
+#application: creates a timeStampString for naming files created using createFlashCardSet()
 #outputs/return values: returns timeStampString
+#function called by: createTimeStamp()
+
 def createTimeStamp():
     timeStamp = datetime.now()
     timeStampString = str(timeStamp.year) + str(timeStamp.month) + str(timeStamp.day) + "_" + str(timeStamp.hour) + "." + str(timeStamp.minute)
     return timeStampString
 
-#function name: createFlashCardSet
-#parameters: newTerm, newDefinition
-#application: allows user to create a new flashcard set; creates new file; appends new vocab to file.
+#function name: createFlashCardSet()
+#parameters: NA
+#application: allows user to create a new JSON file of a new flashcard set
+#outputs/return values: NA
+#function called by: "__main__"
 def createFlashCardSet():
     setName = input("Enter a name for this set: ")
     print("Enter 'done' when finished")
@@ -108,17 +102,17 @@ def createFlashCardSet():
         print("adding %s : %s\n" % (newTerm, newDefinition))
         newCardSet[newTerm] = newDefinition
     cardSetFile = createTimeStamp() + "_" + setName + ".json"
-    with open(cardSetFile, "a+") as f:
-        json.dump(newCardSet, f)
+    with open(cardSetFile, "a+") as file:
+        json.dump(newCardSet, file)
 
-#function name: openFile
-#parameters: NA
-#application: prints file names containing wordbanks for quizzes, asks user to select one for quiz, opens that file and begins gameTerminal()
-#outputs: NA
+# function name: accessFiles()
+# parameters: NA
+# application: prints flashcard set file names, asks user to select one for quiz,\
+    # opens that file and begins gameTerminal()
+# outputs/return values: NA
+# function is called by: gameTerminal()
 def accessFiles():
-    #search within directory for file titles that have been timestamped and return them to user
-    #ask user to select a file of interest
-    #run startGame() with this file
+    #search within directory for JSON files
     os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
     # TODO don't need loop
     for file in glob.glob("*.json"):
@@ -128,11 +122,15 @@ def accessFiles():
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
 
-# function name: gameTerminal
+# function name: gameTerminal()
 # parameters: NA
-# application: for local use; retrieves input for userAnswer; compares userAnswer to vocabTerm; creates text file and appends wrong wrongs for re-testing
+# application: asks user how many words from flashcard set they would like to be quizzed on; \
+#   runs startGame() to select vocab file and initialize wordBank;\
+#   compares userAnswer to correctAnswer; creates new JSON file and appends wrong wrongs for re-testing later
 # outputs/return values: N/A
-# function is called by: wordBank.py
+# function is called by: "__main__"
+
+# TODO: revise this since it's changed for Flask
 def gameTerminal():
     startGame()
     print("Launching quiz...")
@@ -149,14 +147,16 @@ def gameTerminal():
         json.dump(wrongWords, f)
     reTestWrongWords(wrongWordsFile)
 
-# function name: reTestWrongWords
-# parameters: NA
+# function name: reTestWrongWords()
+# parameters: fileName
 # application: run startGame(); open wrongWords text file; user quizSingleWord() to iterate through word bank
 # outputs/return values: N/A
 # function is called by: wordBank.py
+# TODO: revise this since it's changed for Flask
+
 def reTestWrongWords(fileName):
     reQuiz = input("Would you like to be quizzed on the words you missed? Y/N ")
-    if reQuiz in ["Y", "y", "YES", "yes", "yas"]:
+    if reQuiz in ["Y", "y", "YES", "yes"]:
         with open(fileName) as wrongWordsJson:
             wordBank = json.load(wrongWordsJson)
         for i in wordBank:
