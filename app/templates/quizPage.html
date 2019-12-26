@@ -1,46 +1,24 @@
-<!DOCTYPE HTML>
-<html lang = "en">
-  <head>
-    <!-- include Bootstrap to load CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-    p.ex1 {
-  padding-top: 40px;
-    }
-    .quizBox {
-      margin: auto; background-color: white; width: 40%; border: 5px solid #34A853; padding: 10px;
-    }
-    </style>
-    <title>Quiz</title>
-    <meta charset = "UTF-8" />
-  </head>
-  <body style = "background-color:#1a1269;">
-    <div align = "center">
-    <!-- trying to add top margins to box without adding header... -->
-    <p class="ex1"></p>
-    </div>
-    <div class="quizBox">
-    <!-- This POST request will submit form containing user_answer and german_word to server so that it's callable in checkAnswer.html page -->
-    <form method = "POST">
-      <fieldset>
-        <legend>Write this in English</legend>
-        <!--random()function from wordBank.py is called in routes.py as "term"; show randomized term from wordbank as german_word-->
-        <text> {{term}} </text>
-        <!-- when form is submitted, input listed below is submitted as part of request body and becomes callable in routes.py by "name" -->
-        <input name='vocabTerm' type="hidden" value='{{term}}'/>
-        <p>
-          <label>answer</label>
-          <input name = "userAnswer" type = "text" value = "text here" />
-          <text> {{userAnswer}} </text>
-        </p>
-        <!-- create "Check" button and upon click redirect user to /checkAnswer -->
-        <button href="checkAnswer.html" type="submit">Check</button>
-    </form>
-    <!-- This GET request will just render quizPage.html -->
-    <form method = "GET">
-        <button href="quizPage.html" type="submit">Next word</button>
-      </fieldset>
-    </form>
-  </div>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<!-- This POST request will submit form containing userAnswer and term to server so that it's callable in checkAnswer.html page -->
+<form method="POST">
+  <fieldset>
+    <legend>Write this in English</legend>
+    <!--random()function from wordBank.py is called in routes.py as "term"; show randomized term from wordbank as german_word-->
+    <text> {{term}} </text>
+    <!-- when form is submitted, input listed below is submitted as part of request body and becomes callable in routes.py by "name" -->
+    <input name='vocabTerm' type="hidden" value='{{term}}' />
+    <p>
+      <label>answer</label>
+      <input name="userAnswer" type="text" value="text here" />
+      <text> {{userAnswer}} </text>
+    </p>
+    <!-- create "Check" button to redirect user to checkAnswer.html -->
+    <button href="checkAnswer.html" type="submit">Check</button>
+</form>
+<!-- This GET request renders quizPage.html -->
+<form method="GET">
+  <button href="quizPage.html" type="submit">Next word</button>
+  </fieldset>
+</form>
+{% endblock %}

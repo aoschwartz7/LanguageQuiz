@@ -2,49 +2,22 @@
 <!-- -when user clicks "Check", remove "text here" -->
 <!-- -reformat checked answer so it says, vertically: "term", correct/incorrect/almost, "term" means "definition" -->
 
-
-<!DOCTYPE HTML>
-<html lang = "en">
-  <head>
-    <!-- include Bootstrap to load CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-    p.ex1 {
-  padding-top: 40px;
-    }
-    .quizBox  {
-      margin: auto; background-color: white; width: 40%; border: 5px solid #34A853; padding: 10px;
-    }
-    </style>
-    <title>Quiz</title>
-    <meta charset = "UTF-8" />
-  </head>
-  <body style = "background-color:#1a1269;">
-    <div align = "center">
-        <p class="ex1"></p>
-    </div>
-    <div class="quizBox">
-    <form method = "GET">
-      <fieldset>
-        <legend>Write this in English</legend>
-        <text> {{term}} </text>
-        <p>
-          <label> {% if outcome %}
-                  Correct!
-                  {% else %}
-                  Incorrect;
-                  {% endif %}
-          </label>
-          <text> <i>{{term}}</i> means <i>{{correctAnswer}}</i>.</text>
-          <!-- <label>your answer:</label>
-          <text> {{userAnswer}} </text> <br>
-          <label>correct answer:</label>
-          <text> {{correctAnswer}} </text> <br> -->
-
-        </p>
-       <button type="submit">Continue</button>
-      </fieldset>
-    </form>
-  </div>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<form method="GET">
+  <fieldset>
+    <legend>Write this in English</legend>
+    <text> {{term}} </text>
+    <p>
+      <label> {% if outcome %}
+        Correct!
+        {% else %}
+        Incorrect;
+        {% endif %}
+      </label>
+      <text> <i>{{term}}</i> means <i>{{correctAnswer}}</i>.</text>
+    </p>
+    <button type="submit">Continue</button>
+  </fieldset>
+</form>
+{% endblock %}
