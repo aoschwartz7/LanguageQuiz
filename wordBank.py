@@ -1,6 +1,5 @@
 #Next steps:
 # -rename wordBank.py
-# -separate code based on what's Flask versus locally supported code
 
 
 import json
