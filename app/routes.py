@@ -2,7 +2,6 @@
 # -consider using a base.html template and the extends method to create a consistent layout (see chp2 Grinberg blog)
 # -create GUI that displays results (correct/wrong) and streaks (with dancing monkeys)
 # -find a way to provide answer without clicking each time
-# -create a route to redirect user back to lesson or language selection
 
 from flask import render_template, request, redirect
 from app import app
@@ -52,4 +51,4 @@ def quizPage():
         vocabTerm = request.form['vocabTerm']
         userAnswer = request.form['userAnswer']
         return render_template('checkAnswer.html', \
-            term=vocabTerm, userAnswer=userAnswer, correctAnswer=answer(vocabTerm))
+            term=vocabTerm, userAnswer=userAnswer, correctAnswer=answer(vocabTerm), outcome=(userAnswer==(answer(vocabTerm))))

@@ -1,3 +1,8 @@
+<!-- TO DO -->
+<!-- -when user clicks "Check", remove "text here" -->
+<!-- -reformat checked answer so it says, vertically: "term", correct/incorrect/almost, "term" means "definition" -->
+
+
 <!DOCTYPE HTML>
 <html lang = "en">
   <head>
@@ -19,16 +24,23 @@
         <p class="ex1"></p>
     </div>
     <div class="quizBox">
-    <!-- This GET request will present data submitted via previous POST request -->
     <form method = "GET">
       <fieldset>
         <legend>Write this in English</legend>
         <text> {{term}} </text>
         <p>
-          <label>your answer:</label>
+          <label> {% if outcome %}
+                  Correct!
+                  {% else %}
+                  Incorrect;
+                  {% endif %}
+          </label>
+          <text> <i>{{term}}</i> means <i>{{correctAnswer}}</i>.</text>
+          <!-- <label>your answer:</label>
           <text> {{userAnswer}} </text> <br>
           <label>correct answer:</label>
-          <text> {{correctAnswer}} </text>
+          <text> {{correctAnswer}} </text> <br> -->
+
         </p>
        <button type="submit">Continue</button>
       </fieldset>

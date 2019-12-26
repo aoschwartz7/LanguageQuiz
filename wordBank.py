@@ -1,5 +1,8 @@
 #Next steps:
 # -rename wordBank.py
+# -create a button in checkAnswer.html that shows results to user "correct! or wrong"
+# -finish making outcome()
+
 
 import json
 import random
@@ -54,6 +57,19 @@ def randomWord():
 def answer(vocabTerm):
     correctAnswer = wordBank[vocabTerm]
     return correctAnswer
+
+
+# function name: outcome()
+# parameters: userAnswer
+# application: passes userAnswer into answer() to check outcome; if correct, return True; else, False
+# outputs/return values: Boolean
+# function called by: routes.py/quizPage
+def outcome(userAnswer):
+    if userAnswer == answer(userAnswer):
+        return True
+    else:
+        return False
+
 
 
 
