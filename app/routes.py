@@ -19,24 +19,33 @@ def selectLanguage():
 
 @app.route('/selectLesson', methods=['GET','POST'])
 def selectLesson():
-    #capture user's selection of German or Spanish (or other language)
-    language = request.form['language']
-    languageFiles = getVocabFiles(language)
-    return render_template('selectLesson.html', lessons=languageFiles)
+    try:
+        #capture user's selection of German or Spanish (or other language)
+        language = request.form['language']
+        languageFiles = getVocabFiles(language)
+        return render_template('selectLesson.html', lessons=languageFiles)
+    except:
+        return redirect('/')
 
 # TODO comment here too
 @app.route('/loadLesson', methods=['GET', 'POST'])
 def lessons():
-    lesson = request.form['fileName']
-    lessonFile = startGame(lesson)
-    return redirect('/quizPage')
+    try:
+        lesson = request.form['fileName']
+        lessonFile = startGame(lesson)
+        return redirect('/quizPage')
+    except:
+        return redirect('/')
 
 # TODO comment here too
 @app.route('/quizPage', methods=['GET', 'POST'])
 def quizPage():
     #render quizpage and present user with initial randomized 'term' via random_word()
-    if request.method == "GET":
-        return render_template('quizPage.html', term=randomWord())
+    try:
+        if request.method == "GET":
+            return render_template('quizPage.html', term=randomWord())
+    except:
+        return redirect('/selectLanguage')
 
     #user enters answer and clicks "Check" button
     if request.method == "POST":

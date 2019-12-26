@@ -1,7 +1,6 @@
 #Next steps:
 # -rename wordBank.py
 
-
 import json
 import random
 from datetime import datetime
@@ -47,12 +46,15 @@ def getVocabFiles(language):
 def randomWord():
     return random.sample(wordBankKeys, 1)[0]
 
-#function name: numRandomWords
-#parameters: num
-#application: apply randomWord() for particular number of words user chooses to be quizzed on
-#function called by: gameTerminal()
-def numRandomWords(num):
-    return random.sample(wordBankKeys, num)
+# function name: answer()
+# parameters: vocabTerm
+# application: uses key (vocabTerm) to extract value (correctAnswer) in dictionary (wordBank)
+# outputs/return values: correctAnswer
+# function called by: routes.py/quizPage
+def answer(vocabTerm):
+    correctAnswer = wordBank[vocabTerm]
+    return correctAnswer
+
 
 
 
@@ -71,6 +73,14 @@ def quizSingleWord(vocabTerm, correctAnswer):
     elif userAnswer != correctAnswer:
         print("incorrect. {} means {}".format(vocabTerm, correctAnswer))
         return False
+
+
+#function name: numRandomWords()
+#parameters: num
+#application: apply randomWord() for particular number of words user chooses to be quizzed on
+#function called by: gameTerminal()
+def numRandomWords(num):
+    return random.sample(wordBankKeys, num)
 
 #function name: createTimeStamp()
 #parameters: NA
