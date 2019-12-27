@@ -5,7 +5,7 @@
 
 from flask import render_template, request, redirect
 from app import app
-from wordBank import startGame, randomWord, answer, getVocabFiles
+from wordBank import startGame, randomWord, answer, getVocabFiles, approximateTerm
 
 # TODO figure out what page homepage should be
 @app.route('/', methods=['GET'])
@@ -51,4 +51,5 @@ def quizPage():
         vocabTerm = request.form['vocabTerm']
         userAnswer = request.form['userAnswer']
         return render_template('checkAnswer.html', \
-            term=vocabTerm, userAnswer=userAnswer, correctAnswer=answer(vocabTerm), outcome=(userAnswer==(answer(vocabTerm))))
+            term=vocabTerm, userAnswer=userAnswer, correctAnswer=answer(vocabTerm), \
+            outcome=(approximateTerm(userAnswer)==approximateTerm((answer(vocabTerm)))))

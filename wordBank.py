@@ -1,5 +1,6 @@
 #Next steps:
 # -rename wordBank.py
+# -work on approximateAnswer()
 
 
 import json
@@ -55,6 +56,34 @@ def randomWord():
 def answer(vocabTerm):
     correctAnswer = wordBank[vocabTerm]
     return correctAnswer
+
+# function name: approximateAnswer()
+# parameters:
+# application: strips away articles from userAnswer/correctAnswer to make user's answer more flexible for this game
+# outputs/return values: strippedAnswer
+# function called by:
+
+
+# TO DO: find synonymn for approximate
+def approximateTerm(termToClean):
+
+    #extraneous stuff to clean away
+    articles = ["the","an", "a"]
+    punctuation = [".", ",", ":", ";"]
+
+    termToClean = termToClean.lower()
+    termToClean.split()
+    for x in articles:
+        termToClean = termToClean.replace(x, "")
+    for x in punctuation:
+        termToClean = termToClean.replace(x, " ")
+    termToClean.join(termToClean)
+
+    termToClean = termToClean.strip()
+    return termToClean
+
+
+
 
     #### The following lines of code provide for local use of Quiz Game in Terminal ####
 # ---------------------------------------------------------------------------------------------------------
