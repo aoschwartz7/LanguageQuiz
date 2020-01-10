@@ -27,15 +27,26 @@ def startGame(lessonFile):
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
 
+# function name: getLanguageFolder()
+#parameters:
+#application: open VocabQuiz/Languages and return folder contents (ie GermanToSpanish, GermantoEnglish, etc)
+#outputs/return values: VocabQuiz/Languages/folderName
+#called by:
+def getLanguageFolder():
+    #change the current working directory to the given path
+    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/Languages")
+    folderNames = glob.glob("*")
+    return folderNames
+
 # function name: getVocabFiles()
 # parameters: language
 # application: get existing .json fileNames vocab dictionaries when \
 # user selects a language in routes.py/loadLesson
 # outputs/return values: fileNames
 # called by: routes.py/selectLesson
-def getVocabFiles(language):
+def getVocabFiles(userSelection):
     #change the current working directory to the given path
-    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/" + language)
+    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/Languages/" + userSelection)
     fileNames = glob.glob("*.json")
     fileNames = [filename.strip('.json') for filename in fileNames]
     return fileNames
@@ -65,22 +76,22 @@ def answer(vocabTerm):
 
 
 # TO DO: find synonymn for approximate
-def approximateTerm(termToClean):
+def cleanString(stringToClean):
 
     #extraneous stuff to clean away
     articles = ["the","an", "a"]
-    punctuation = [".", ",", ":", ";"]
+    punctuation = [".", ",", ":", ";", "?"]
 
-    termToClean = termToClean.lower()
-    termToClean.split()
+    stringToClean = stringToClean.lower()
+    stringToClean.split()
     for x in articles:
-        termToClean = termToClean.replace(x, "")
+        stringToClean = stringToClean.replace(x, "")
     for x in punctuation:
-        termToClean = termToClean.replace(x, " ")
-    termToClean.join(termToClean)
+        stringToClean = stringToClean.replace(x, " ")
+    stringToClean.join(stringToClean)
 
-    termToClean = termToClean.strip()
-    return termToClean
+    stringToClean = stringToClean.strip()
+    return stringToClean
 
 
 

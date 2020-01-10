@@ -1,11 +1,10 @@
 # TODOs:
-# -consider using a base.html template and the extends method to create a consistent layout (see chp2 Grinberg blog)
-# -create GUI that displays results (correct/wrong) and streaks (with dancing monkeys)
 # -find a way to provide answer without clicking each time
+# -learn more about fuzzymatch and if i should apply it here
 
 from flask import render_template, request, redirect
 from app import app
-from wordBank import startGame, randomWord, answer, getVocabFiles, approximateTerm
+from wordBank import startGame, randomWord, answer, getLanguageFolder, getVocabFiles, cleanString
 
 # TODO figure out what page homepage should be
 @app.route('/', methods=['GET'])
@@ -14,13 +13,19 @@ from wordBank import startGame, randomWord, answer, getVocabFiles, approximateTe
 @app.route('/selectLanguage', methods=['GET', 'POST'])
 def selectLanguage():
     # TODO glob for all possible languages, pass list into selectLanguage.html
-    return render_template('selectLanguage.html')
+    try:
+        #show user language folders
+        languageFolder = getLanguageFolder()
+        return render_template('selectLanguage.html', languages=languageFolder)
+    except:
+        return redirect('/')
 
 @app.route('/selectLesson', methods=['GET','POST'])
 def selectLesson():
     try:
         #capture user's selection of German or Spanish (or other language)
-        language = request.form['language']
+        print("line 27")
+        language = request.form['languageFolder']
         languageFiles = getVocabFiles(language)
         return render_template('selectLesson.html', lessons=languageFiles)
     except:
@@ -52,4 +57,4 @@ def quizPage():
         userAnswer = request.form['userAnswer']
         return render_template('checkAnswer.html', \
             term=vocabTerm, userAnswer=userAnswer, correctAnswer=answer(vocabTerm), \
-            outcome=(approximateTerm(userAnswer)==approximateTerm((answer(vocabTerm)))))
+            outcome=(cleanString(userAnswer)==cleanString((answer(vocabTerm)))))

@@ -2,11 +2,15 @@
 {% block content %}
 <!-- This GET request will present user with a selection for language and vocabulary lesson -->
 <!-- Once user selects language and lesson, rediect user to new page of /quizPage and use corresponding json file as wordBank-->
-<form action="/selectLesson" method="POST">
-  <fieldset>
+<form method="POST" action="/selectLesson">
     <legend>Welcome to my Vocabulary Quiz Game! <br>Select a language you wish to study:</legend>
-    <button type="submit" name="language" value="German">German</button>
-    <button type="submit" name="language" value="Spanish">Spanish</button>
-  </fieldset>
+    <select name="languageFolder">
+      {% for language in languages %}
+      <option value="{{language}}"> {{language}} </option>
+      {% endfor %}
+    </select>
+    <!-- User selects a language from the drop down and initiates a POST request -->
+    <!-- render selectLesson.html and pass language selection -->
+    <button type="submit">Continue</button>
 </form>
 {% endblock %}
