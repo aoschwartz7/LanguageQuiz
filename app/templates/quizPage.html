@@ -2,7 +2,6 @@
 {% block content %}
 <!-- This POST request will submit form containing userAnswer and term to server so that it's callable in checkAnswer.html page -->
 <form method="POST">
-  <fieldset>
     <legend>Write this in English</legend>
     <!--random()function from wordBank.py is called in routes.py as "term"; show randomized term from wordbank as german_word-->
     <text> {{term}} </text>
@@ -10,7 +9,8 @@
     <input name='vocabTerm' type="hidden" value='{{term}}' />
     <p>
       <label>answer</label>
-      <input name="userAnswer" type="text" value="text here" />
+      <!-- TODO: "text here" should disappear when clicked on -->
+      <input name="userAnswer" type="text" placeholder="text here" />
       <text> {{userAnswer}} </text>
     </p>
     <!-- create "Check" button to redirect user to checkAnswer.html -->
@@ -19,6 +19,5 @@
 <!-- This GET request renders quizPage.html -->
 <form method="GET">
   <button href="quizPage.html" type="submit">Next word</button>
-  </fieldset>
 </form>
 {% endblock %}

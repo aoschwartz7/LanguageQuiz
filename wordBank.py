@@ -75,7 +75,8 @@ def answer(vocabTerm):
 # function called by:
 
 
-# TO DO: find synonymn for approximate
+# TODO: find synonymn for approximate
+# TODO: split answer by "/" and ....
 def cleanString(stringToClean):
 
     #extraneous stuff to clean away
