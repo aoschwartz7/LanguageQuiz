@@ -13,6 +13,7 @@ wordBank = {}
 wordBankKeys = []
 wrongWords = {}
 newCardSet = {}
+languageSelection = ""
 
 # function name: startGame()
 # parameters: lessonFile
@@ -45,11 +46,20 @@ def getLanguageFolder():
 # outputs/return values: fileNames
 # called by: routes.py/selectLesson
 def getVocabFiles(userSelection):
+    global languageSelection
     #change the current working directory to the given path
     os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/Languages/" + userSelection)
     fileNames = glob.glob("*.json")
     fileNames = [filename.strip('.json') for filename in fileNames]
+    languageSelection = userSelection
     return fileNames
+
+# function name: languageSelection()
+# parameters:
+# application: helper function used to return value of global variable languageSelection
+# outputs: languageSelection
+def languageSelection():
+    return languageSelection
 
 # function name: randomWord()
 # parameters: NA
@@ -80,23 +90,24 @@ def answer(vocabTerm):
 def cleanString(stringToClean):
 
     #extraneous stuff to clean away
-    articles = ["the","an", "a"]
+    articles = ["the","an", "a", "el", "la"]
     punctuation = [".", ",", ":", ";", "?"]
 
     stringToClean = stringToClean.lower()
+    #if term definition is "el niño/la niña", split by "/" first
+    stringToClean.split("/")
     stringToClean.split()
+    #remove articles
     for x in articles:
         stringToClean = stringToClean.replace(x, "")
+    #remove punctuation
     for x in punctuation:
         stringToClean = stringToClean.replace(x, " ")
     stringToClean.join(stringToClean)
-
+    #remove whitespace
     stringToClean = stringToClean.strip()
     return stringToClean
-
-
-
-
+    
     #### The following lines of code provide for local use of Quiz Game in Terminal ####
 # ---------------------------------------------------------------------------------------------------------
 # function name: quizSingleWord()

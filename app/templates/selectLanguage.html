@@ -3,7 +3,8 @@
 <!-- This GET request will present user with a selection for language and vocabulary lesson -->
 <!-- Once user selects language and lesson, rediect user to new page of /quizPage and use corresponding json file as wordBank-->
 <form method="POST" action="/selectLesson">
-    <legend>Welcome to my Vocabulary Quiz Game! <br>Select a language you wish to study:</legend>
+    <h4>Welcome to my Language Learner's Quiz Game!</h4>
+    <h5> Which of the following would you like to study?</h5>
     <select name="languageFolder">
       {% for language in languages %}
       <option value="{{language}}"> {{language}} </option>

@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- This POST request will submit form containing userAnswer and term to server so that it's callable in checkAnswer.html page -->
+
 <form method="POST">
-    <legend>Write this in English</legend>
+    <legend>Translate this from {{languageSelection}} </legend>
     <!--random()function from wordBank.py is called in routes.py as "term"; show randomized term from wordbank as german_word-->
     <text> {{term}} </text>
     <!-- when form is submitted, input listed below is submitted as part of request body and becomes callable in routes.py by "name" -->
-    <input name='vocabTerm' type="hidden" value='{{term}}' />
+    <input name='vocabTerm' type="hidden" value='{{term}}'/>
     <p>
       <label>answer</label>
       <!-- TODO: "text here" should disappear when clicked on -->
