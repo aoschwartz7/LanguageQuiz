@@ -1,8 +1,7 @@
 German to English Language Learners Quiz  
-This Python Flask application uses a JSON representation of a German-English dictionary to help users learn more English/German vocabulary.
-The JSON dictionary was found @ ProjectGutenberg.org.
+This Python-Flask application uses a JSON representations of German-English and German-Spanish dictionaries to help users learn more introductory German/English/Spanish vocabulary.
 
-The application is comprised of a few files listed below.
+The application is comprised of the following files:
 
 1) __init__.py - creates Flask instance to start application.
 2) routes.py - creates /quizpage URL, starts game, and applies other functions created in wordBank.py to render HTML pages containing german term, user answer, and correct answer.
