@@ -1,4 +1,5 @@
-German to English Language Learners Quiz  
+Language Learner's Quiz
+--------------------------
 This Python-Flask application uses a JSON representations of German-English and German-Spanish dictionaries to help users learn more introductory German/English/Spanish vocabulary.
 
 The application is comprised of the following files:
