@@ -8,13 +8,13 @@
     <!-- <legend>Translate this term</legend>
     <text> {{term}} </text> -->
     <p>
-      <label> {% if outcome %}
+      <label> {% if userAnswer == cleanedAnswer %}
         Correct!
         {% else %}
         Incorrect;
         {% endif %}
       </label>
-      <text> <i>{{term}}</i> means <i>{{correctAnswer}}</i>.</text>
+      <text> <i>{{term}}</i> means <i>{{fullAnswer}}</i>.</text>
     </p>
     <button type="submit">Continue</button>
 </form>

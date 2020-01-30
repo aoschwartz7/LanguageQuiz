@@ -2,6 +2,7 @@
 # -find a way to provide answer without clicking each time
 # -add a "Home" button
 # -figure out how to center text in quizBox
+# -add "Back" button to quizPage
 
 from flask import render_template, request, redirect
 from app import app
@@ -59,5 +60,8 @@ def quizPage():
         vocabTerm = request.form['vocabTerm']
         userAnswer = request.form['userAnswer']
         return render_template('checkAnswer.html', \
-            term=vocabTerm, userAnswer=userAnswer, correctAnswer=answer(vocabTerm), \
-            outcome=(cleanString(userAnswer)==cleanString((answer(vocabTerm)))))
+            term = vocabTerm, \
+            userAnswer = cleanString(userAnswer), \
+            cleanedAnswer = cleanString(answer(vocabTerm)), \
+            fullAnswer = answer(vocabTerm)
+        )
