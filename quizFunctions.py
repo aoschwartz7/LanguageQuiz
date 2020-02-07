@@ -3,22 +3,20 @@
 # Section 2) Local-use Functions: builds off Section 1 to allow for app's local \
 #            use with Terminal.
 # ------------------------------------------------------------------------------
-
 import json
 import random
 import time
 from datetime import datetime
 import glob, os
-
-
+# ------------------------------------------------------------------------------
 # Section 1) Python-Flask App Functions
 # ------------------------------------------------------------------------------
 
 # create dictionary and list instances
 wordBank = {}
 wordBankKeys = []
-newCardSet = {}
-languageSelection = ""
+newCardDeck = {}
+cardDeckSelection = ""
 
 # function name: startGame()
 # parameters: lessonFile
@@ -33,41 +31,82 @@ def startGame(lessonFile):
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
 
-# function name: getLanguageFolder()
+# function name: getCardDeckFolders()
 # parameters: NA
 # application: open VocabQuiz/Languages pathway and return folder contents \
 #             (ie GermanToSpanish, GermantoEnglish, etc)
 # output: folderNames within VocabQuiz/Languages pathway
 # called by: routes.py/selectLanguage, Section 2)
-def getLanguageFolder():
-    #change the current working directory to the given path
-    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/Languages")
+# TODO: figure out how to reduce pathway
+def getCardDeckFolders():
+    #change the current working directory to path containing card deck folders
+    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders")
     folderNames = glob.glob("*")
     return folderNames
 
-# function name: getVocabFiles()
+# function name: createCardDeckFolder()
+# parameters: folderName
+# application: create new flashcard deck directory for user
+# output:
+# called by:
+# TODO: figure out how to reduce pathway
+def createCardDeckFolder(folderName):
+    os.mkdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders/" +
+    folderName)
+
+# function name: fillCardDeck()
+# parameters: folderName, newTerm, new Definition
+# application: create new flashcard deck in chosen directory
+# output: NA
+# called by: routes.py/createCardDeck
+def fillCardDeck(newTerm, newDefinition):
+    #call global variable newCardDeck{} so we can add flashcards to it
+    global newCardDeck
+    newCardDeck[newTerm] = newDefinition
+
+# function name: createCardDeck()
+# parameters: deckTitle
+# application: create new JSON file named after user-assigned title
+#              and append newCardDeck to file
+# output: NA
+# called by: routes.py/createCardDeck
+def createCardDeck(deckTitle):
+    global newCardDeck
+    fileName = deckTitle + ".json"
+    with open(fileName, "a+") as file:
+        json.dump(newCardDeck, file)
+
+# def createCardDeck(folderName, deckTitle):
+#     global newCardDeck
+#     # change directory to folder that user selects
+#     os.chdir("FlashcardDeckFolders/" +
+#     folderName +"/")
+#     with open(deckTitle + '.json', "a+") as file:
+#         json.dump(newCardDeck, file)
+
+
+# function name: getCardDeckFiles()
 # parameters: userSelection
 # application: retrieve existing .json fileNames that contain vocab dictionaries \
 #              when user selects a language in routes.py/loadLesson
 # output: fileNames
 # called by: routes.py/selectLesson
-def getVocabFiles(userSelection):
-    global languageSelection
+def getCardDeckFiles(deckFolder):
     #change the current working directory to the given path
-    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/Languages/" + userSelection)
+    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders/"
+    + deckFolder )
     fileNames = glob.glob("*.json")
     fileNames = [filename.strip('.json') for filename in fileNames]
-    languageSelection = userSelection
     return fileNames
 
-# function name: languageSelection()
+# function name: cardDeckSelection()
 # parameters: NA
 # application: this is a helper function that can be used to return the value of \
-#              the global variable languageSelection
-# outputs: languageSelection
+#              the global variable cardDeckSelection
+# outputs: cardDeckSelection
 # called by: routes.py/quizPage
-def languageSelection():
-    return languageSelection
+# def cardDeckSelection():
+#     return cardDeckSelection
 
 # function name: randomTerm()
 # parameters: NA
@@ -171,13 +210,13 @@ def createFlashCardSet():
         newDefinition = input("Enter definition for term: ")
         if newDefinition == "done":
             break
-        #add term and definition to newCardSet{}
+        #add term and definition to newCardDeck{}
         print("adding %s : %s\n" % (newTerm, newDefinition))
-        newCardSet[newTerm] = newDefinition
+        newCardDeck[newTerm] = newDefinition
     #create timestamped JSON file for new set
     cardSetFile = createTimeStamp() + "_" + setTitle + ".json"
     with open(cardSetFile, "a+") as file:
-        json.dump(newCardSet, file)
+        json.dump(newCardDeck, file)
 
 # function name: accessFiles()
 # parameters: NA

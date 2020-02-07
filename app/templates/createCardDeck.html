@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<!--user selected flashcard folder for new deck in /selectCardDeckFolder-->
+<!--allow user to create new cards -->
+<form method="POST" action="/createCardDeck">
+  <h5>Create new flashcards below. When finished, enter a title for
+    your new deck and select 'Done'.</h5>
+    <!-- comment....-->
+  <input name='folderName' type="hidden" value='{{folderName}}'/>
+  <label>new term:</label>
+  <input name="newTerm" type="text" placeholder="text here" />
+  <text> {{newTerm}} </text>
+  <label>new definition:</label>
+  <input name="newDefinition" type="text" placeholder="text here" />
+  <text> {{newDefinition}} </text>
+  <button type="submit">Create Term</button>
+</form>
+<!--user has finished creating the new JSON file for their flashcards-->
+<!--direct user to /homepage so they can choose to start quiz with new set-->
+<form method="POST" action="/createCardDeck">
+  <input name="newCardDeckTitle" type="text" placeholder="enter title" />
+  <!--comment...-->
+  <input name='folderName' type="hidden" value='{{folderName}}'/>
+  <text> {{newCardDeckTitle}} </text>
+  <button type="submit">Done</button>
+</form>
+
+
+
+{% endblock %}

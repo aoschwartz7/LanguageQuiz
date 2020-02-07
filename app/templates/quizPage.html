@@ -5,7 +5,7 @@
 
 <form method="POST">
   <!-- prompt user for answer in whatever language selection they made -->
-    <legend>Translate this from {{languageSelection}}: </legend>
+    <legend>Translate/define this from {{languageSelection}}: </legend>
     <!--random()function from wordBank.py is called in routes.py as "term"; \
         show randomized term from wordbank as german_word-->
     <text> <br> {{term}} </text>
@@ -14,7 +14,6 @@
     <input name='vocabTerm' type="hidden" value='{{term}}'/>
     <p>
       <label>answer</label>
-      <!-- TODO: "text here" should disappear when clicked on -->
       <input name="userAnswer" type="text" placeholder="text here" />
       <text> {{userAnswer}} </text>
     </p>

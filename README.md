@@ -1,8 +1,14 @@
 Language Learner's Quiz
 --------------------------
-This Python-Flask application uses a JSON representations of German-English and German-Spanish dictionaries to help users learn more introductory German/English/Spanish vocabulary.
+This web application uses a Python-Flask framework to create a vocabulary quiz for users. It works with JSON representations of the vocabulary files.
 
-The application is comprised of the following files:
+Overview:
+
+In this repository,
+
+uses a JSON representation of German-English and German-Spanish dictionaries to help users learn more introductory German/English/Spanish vocabulary.
+
+The application is made up of the following files:
 
 1) __init__.py - creates Flask instance to start application.
 2) routes.py - creates /quizpage URL, starts game, and applies other functions created in wordBank.py to render HTML pages containing german term, user answer, and correct answer.
