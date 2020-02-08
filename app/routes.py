@@ -13,7 +13,6 @@ cardDeckSelection, answer, cleanString
 
 # TODO figure out what page homepage should be
 @app.route('/', methods=['GET'])
-
 # user can choose to create a new flashcard set or continue to quiz using \
 # existing files
 @app.route('/homepage', methods=['GET', 'POST'])
@@ -23,13 +22,10 @@ def homepage():
     #user chooses to continue to quiz
     if request.method =="POST":
         return render_template('quizCardDeckFolders.html')
-
 # user can select an existing flashcard deck folder for their new deck
 # or create a new flashcard deck folder
-
 @app.route('/selectCardDeckFolder', methods=['GET', 'POST'])
 def newCardDeck():
-    # TODO: does this need to be a POST request to capture folder selection?
     if request.method == "GET":
         cardDeckFolders = getCardDeckFolders()
         return render_template('selectCardDeckFolder.html',
@@ -48,7 +44,6 @@ def newCardDeck():
             )
         except:
             return redirect('/')
-
 # user can select language here
 # TODO is this app route even necessary? or should I combine this with above route?
 @app.route('/createCardDeck', methods=['GET', 'POST'])
@@ -78,55 +73,43 @@ def createCardDeck():
                     fillCardDeck=fillCardDeck(newTerm, newDefinition),
                     folderName=folderName
                     )
-
         except:
             return redirect('/')
-
 # if user selects "Continue to Quiz" on /homepage, direct user here
 @app.route('/quizCardDeckFolders', methods=['POST'])
 def quizCardDeckFolders():
     try:
         # glob for all possible flashcard folders
         cardDeckFolders = getCardDeckFolders()
-        folder = request.form['folder']
         return render_template('quizCardDeckFolders.html',
-        folders=cardDeckFolders,
-        folder=folder
+        folders=cardDeckFolders
         )
     except:
         return redirect('/')
-
-# @app.route('/quizCardDeck', methods=['POST'])
-# def quizCardDeck():
-#     try:
-#         folder = request.form['folderName']
-#         deckFile = startGame(deck)
-
-
-
-
-# load vocab quiz game with lesson selection
-@app.route('/loadQuiz', methods=['GET', 'POST'])
-def lessons():
+@app.route('/quizCardDeck', methods=['POST'])
+def quizCardDeck():
     try:
-        lesson = request.form['lesson']
-        lessonFile = startGame(lesson)
-        return redirect('/quizPage')
+        deckFolder = request.form['cardDeckFolders']
+        #retrieve user's 'folder' selection from form and return files from it
+        return render_template('quizCardDeck.html',
+        files = getCardDeckFiles(deckFolder)
+        )
     except:
         return redirect('/')
-
-# generate random vocab term and provide entry form (correct term?) for user to submit an answer
-@app.route('/quizPage', methods=['GET', 'POST'])
+# load quiz via startGame() and redirect user to quizPage.html
+@app.route('/loadQuiz')
+def loadQuiz():
+    flashcardFile = request.form['cardDecks']
+    startGame(flashcardFile)
+    return redirect('quizPage.html')
+# show user randomized term and allow them to enter answer
+@app.route('/quizPage', methods=['POST'])
 def quizPage():
-    #present user with initial randomized term
-    try:
-        if request.method == "GET":
-            return render_template('quizPage.html', term=randomTerm(), cardDeckSelection = cardDeckSelection())
-    except:
-        return redirect('/selectCardDeckFolder')
-
-    #user enters answer and clicks "Check" button
-    #clean their answer by removing articles and punctuation, then assess and show outcome
+    #present user with initial randomized term if request.method == "GET":
+    if request.method == "GET":
+        return render_template('quizPage.html', term=randomTerm())
+    #user enters answer and clicks "Check" button;
+    #clean their answer by removing articles/punctuation then show outcome
     if request.method == "POST":
         vocabTerm = request.form['vocabTerm']
         userAnswer = request.form['userAnswer']
