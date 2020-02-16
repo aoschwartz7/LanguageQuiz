@@ -7,7 +7,7 @@
 <form method="GET">
     <!-- <legend>Translate this term</legend>
     <text> {{term}} </text> -->
-    <p>
+    <p id="text">
       <label> {% if userAnswer == cleanedAnswer %}
         Correct!
         {% else %}
@@ -16,6 +16,6 @@
       </label>
       <text> <i>{{term}}</i> means <i>{{fullAnswer}}</i>.</text>
     </p>
-    <button type="submit">Continue</button>
+    <button class="button" type="submit">Continue</button>
 </form>
 {% endblock %}

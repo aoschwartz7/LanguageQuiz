@@ -3,7 +3,7 @@
 <!--user chose "New Flashcard Deck" from /homepage-->
 <!--if user decides to pick a card deck folder that already exists:-->
 <form method="POST" action="/createCardDeck">
-    <h5>Select a folder for your new card deck: </h5>
+    <h5 id="text">Select a folder for your new card deck: </h5>
     <!--Flash message that user's new folder was created from /createCardDeck-->
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -19,13 +19,13 @@
       <option value="{{folder}}"> {{folder}} </option>
       {% endfor %}
     </select>
-    <button type="submit">Continue</button>
+    <button class="button" type="submit">Continue</button>
 </form>
 <!--if user decides to create a new card deck folder:-->
 <form method="POST" action="/selectCardDeckFolder">
-  <h5>Create a new folder then select it above: </h5>
-  <input name="newCardDeckFolder" type="text" placeholder="text here" />
+  <h5 id="text">Create a new folder then select it above: </h5>
+  <input id="text" name="newCardDeckFolder" type="text" placeholder="text here" />
   <text> {{newFolder}} </text>
-  <button type="submit">Continue</button>
+  <button class="button" type="submit">Continue</button>
 </form>
 {% endblock %}

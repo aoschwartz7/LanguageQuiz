@@ -2,12 +2,12 @@
 {% block content %}
 <!--give user choice to create a new flashcard set OR continue with existing files-->
 <form method="GET" action="/selectCardDeckFolder">
-  <h4>Welcome to my Language Learner's Vocab Quiz!</h4>
-  <button type="submit">Make New Flashcard Deck</button>
+  <h4 id="text">Welcome to my Language Learner's Vocab Quiz!</h4>
+  <button class="button" type="submit">Make New Flashcard Deck</button>
 </form>
 <!--send user to /quizCardDeckFolders start loading the quiz-->
 <form method="POST" action="/quizCardDeckFolders">
-  <button type="submit">Continue to Quiz</button>
+  <button class="button" type="submit">Continue to Quiz</button>
 </form>
 
 {% endblock %}

@@ -3,13 +3,13 @@
 <!--user has picked a flashcard folder and can now select a flashcard deck
 for the quiz-->
 <form method="POST" action=/loadQuiz>
-  <h5>Select a flashcard set:</h5>
+  <h5 id="text">Select a flashcard set:</h5>
   <select name="cardDecks">
     {% for file in files %}
     <option value="{{file}}"> {{file}} </option>
     {% endfor %}
   </select>
-  <button type="submit">Continue</button>
+  <button class="button" type="submit">Continue</button>
 </form>
 
 {% endblock %}
