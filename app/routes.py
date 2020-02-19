@@ -7,6 +7,7 @@
 
 from flask import render_template, flash, request, redirect
 from app import app
+import os
 from quizFunctions import getCardDeckFolders, createCardDeckFolder, \
 getCardDeckFiles, fillCardDeck, createCardDeck, startGame, randomTerm, \
 cardDeckSelection, answer, cleanString
@@ -18,9 +19,12 @@ cardDeckSelection, answer, cleanString
 @app.route('/homepage', methods=['GET', 'POST'])
 def homepage():
     if request.method == "GET":
+        print("line22", os.getcwd())
         return render_template('homepage.html')
     #user chooses to continue to quiz
-    if request.method =="POST":
+    if request.method == "POST":
+        # TODO why is this not printing?
+        print("line27", os.getcwd())
         return render_template('quizCardDeckFolders.html')
 # user can select an existing flashcard deck folder for their new deck
 # or create a new flashcard deck folder
@@ -36,7 +40,9 @@ def newCardDeck():
             #if user decides to create new card deck folder, add their new folder to
             #VocabQuiz/FlashcardDeckFolders
             newFolder = request.form['newCardDeckFolder']
+            print("line 40", os.getcwd())
             newFolder = createCardDeckFolder(newFolder)
+            os.chdir("..")
             #flash message that folder was created
             # flash("New folder created! Select it below.")
             return render_template('selectCardDeckFolder.html',
@@ -47,7 +53,7 @@ def newCardDeck():
 # user can select language here
 # TODO is this app route even necessary? or should I combine this with above route?
 @app.route('/createCardDeck', methods=['GET', 'POST'])
-def createCardDeck():
+def createCardDeckProcess():
     if request.method == "POST":
         try:
             # first if statement is triggered when user switches between
@@ -61,13 +67,18 @@ def createCardDeck():
             if 'newCardDeckTitle' in request.form:
                 newDeckTitle = request.form['newCardDeckTitle']
                 folderName=request.form['folderName']
+                print("line67")
+                os.chdir("./" + folderName)
+                createCardDeck(newDeckTitle)
+                os.chdir("..")
                 return render_template('homepage.html',
-                folderName=folderName,
-                makeJSONFile=createCardDeck(newDeckTitle)
+                    folderName=folderName
                 )
             else:
                 newTerm = request.form['newTerm']
                 newDefinition = request.form['newDefinition']
+                print("New term: ", newTerm)
+                print("New def: ", newDefinition)
                 folderName = request.form['folderName']
                 return render_template('createCardDeck.html',
                     fillCardDeck=fillCardDeck(newTerm, newDefinition),

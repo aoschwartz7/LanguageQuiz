@@ -7,11 +7,11 @@
     your new deck and select 'Done'.</h5>
     <!-- comment....-->
   <input id="text" name='folderName' type="hidden" value='{{folderName}}'/>
-  <label>new term:</label>
-  <input id="text" name="newTerm" type="text" placeholder="text here" />
+  <i><label id="text">new term:</label></i>
+  <input name="newTerm" type="text" placeholder="text here" />
   <text> {{newTerm}} </text>
-  <label>new definition:</label>
-  <input id="text" name="newDefinition" type="text" placeholder="text here" />
+  <i><label id="text">new definition:</label></i>
+  <input name="newDefinition" type="text" placeholder="text here" />
   <text> {{newDefinition}} </text>
   <button class="button" type="submit">Create Term</button>
 </form>
@@ -21,7 +21,7 @@
   <input name="newCardDeckTitle" type="text" placeholder="enter title" />
   <!--comment...-->
   <input id="text" name='folderName' type="hidden" value='{{folderName}}'/>
-  <text> {{newCardDeckTitle}} </text>
+  <!-- <text> {{newCardDeckTitle}} </text> -->
   <button class="button" type="submit">Done</button>
 </form>
 
