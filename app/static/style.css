@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block head %}
+  {{ super() }}
+/* include Bootstrap formatting */
+<link rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+crossorigin="anonymous">
+<style>
+/*add space between content and border */
+  p.pad {
+    padding-top: 40px;
+        }
+  #text{
+  color: #90ee90;
+  font-family: HelveticaNeue-Thin
+       }
+ .quizBox {
+   margin: auto;
+   background-color: #313B72;
+   width: 45%;
+   border: 5px
+   solid #272F5B;
+   padding: 10px;
+          }
+  .button {
+  background-color: #3d498f;
+  /*404D96 3d498f 404096 503d8f  */
+  border: none;
+  color: #90ee90;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: HelveticaNeue-Thin;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 3px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+        }
+</style>
+{% endblock %}

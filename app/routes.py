@@ -86,6 +86,8 @@ def quizCardDeckFolders():
         )
     except:
         return redirect('/')
+
+
 @app.route('/quizCardDeck', methods=['POST'])
 def quizCardDeck():
     try:
@@ -96,14 +98,18 @@ def quizCardDeck():
         )
     except:
         return redirect('/')
+
+
 # load quiz via startGame() and redirect user to quizPage.html
-@app.route('/loadQuiz')
+@app.route('/loadQuiz', methods=['POST'])
 def loadQuiz():
     flashcardFile = request.form['cardDecks']
     startGame(flashcardFile)
-    return redirect('quizPage.html')
+    return redirect('quizPage')
+
+
 # show user randomized term and allow them to enter answer
-@app.route('/quizPage', methods=['POST'])
+@app.route('/quizPage', methods=['GET','POST'])
 def quizPage():
     #present user with initial randomized term if request.method == "GET":
     if request.method == "GET":

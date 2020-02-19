@@ -40,7 +40,7 @@ def startGame(lessonFile):
 # TODO: figure out how to reduce pathway
 def getCardDeckFolders():
     #change the current working directory to path containing card deck folders
-    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders")
+    os.chdir("./FlashcardDeckFolders")
     folderNames = glob.glob("*")
     return folderNames
 
@@ -51,8 +51,9 @@ def getCardDeckFolders():
 # called by:
 # TODO: figure out how to reduce pathway
 def createCardDeckFolder(folderName):
-    os.mkdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders/" +
-    folderName)
+    os.mkdir(folderName)
+    # os.mkdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders/" +
+    # folderName)
 
 # function name: fillCardDeck()
 # parameters: folderName, newTerm, new Definition
@@ -92,9 +93,8 @@ def createCardDeck(deckTitle):
 # output: fileNames
 # called by: routes.py/selectLesson
 def getCardDeckFiles(deckFolder):
-    #change the current working directory to the given path
-    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders/"
-    + deckFolder )
+    # change the current working directory to the given path
+    os.chdir("./" + deckFolder )
     fileNames = glob.glob("*.json")
     fileNames = [filename.strip('.json') for filename in fileNames]
     return fileNames
@@ -226,7 +226,7 @@ def createFlashCardSet():
 # function is called by: __main__
 def accessFiles():
     #search within directory for JSON files
-    os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
+    os.chdir("./VocabQuiz")
     # TODO don't need loop
     for file in glob.glob("*.json"):
         time.sleep(.5)
