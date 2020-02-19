@@ -1,30 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form method="POST" action="/checkAnswer">
+<form method="POST">
+  <!-- <form method="POST" action="/checkAnswer"> -->
   <!-- prompt user for answer in whatever language selection they made -->
-    <legend>Translate/define this from :</legend>
-    <!-- {{languageSelection}} -->
-
+    <legend id="text">Define the following:</legend>
     <!--random()function from wordBank.py is called in routes.py as "term"; \
         show randomized term from wordbank as german_word-->
-    <text><br> {{term}} </text>
-    <!-- when form is submitted, input listed below is submitted as part of request body \
-        and becomes callable in routes.py by "name" -->
-    <input id="text" name='vocabTerm' type="hidden" value='{{term}}'/>
-    <p>
-      <label>answer</label>
-      <input id="text" name="userAnswer" type="text" placeholder="text here" />
+    <text id="text">{{term}}</text>
+    <br>
+    <input name='vocabTerm' type="hidden" value='{{term}}'/>
+      <input name="userAnswer" type="text" placeholder="answer" />
       <text> {{userAnswer}} </text>
-    </p>
-    <!-- create "Check" button to redirect user to checkAnswer.html -->
+    <!--create "Check" button to redirect user to checkAnswer.html-->
     <button class="button" href="checkAnswer.html" type="submit">Check</button>
 </form>
 
 <form method="GET">
   <button class="button" href="quizPage.html" type="submit">Next word</button>
 </form>
-
-
 
 {% endblock %}

@@ -1,0 +1,35 @@
+<style>
+/*add space between content and border */
+/* TODO stylize dropdown */
+  p.pad {
+    padding-top: 40px;
+        }
+  #text{
+  color: #90ee90;
+  font-family: HelveticaNeue-Thin
+       }
+ .quizBox {
+   margin: auto;
+   background-color: #313B72;
+   width: 45%;
+   border: 5px
+   solid #272F5B;
+   padding: 10px;
+          }
+  .button {
+  background-color: #3d498f;
+  /*404D96 3d498f 404096 503d8f  */
+  border: none;
+  color: #90ee90;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: HelveticaNeue-Thin;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 3px 2px;
+  border-radius: 12px;
+  cursor: pointer;
+        }
+</style>

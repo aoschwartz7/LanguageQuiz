@@ -121,7 +121,6 @@ def quizPage():
         userAnswer = request.form['userAnswer']
         return render_template('checkAnswer.html', \
             term = vocabTerm, \
-            userAnswer = cleanString(userAnswer), \
-            cleanedAnswer = cleanString(answer(vocabTerm)), \
-            fullAnswer = answer(vocabTerm)
+            fullAnswer = answer(vocabTerm), \
+            outcome = (cleanString(userAnswer)==cleanString(answer(vocabTerm)))
         )

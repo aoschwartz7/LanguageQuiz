@@ -5,16 +5,14 @@
 {% extends "base.html" %}
 {% block content %}
 <form method="GET">
-    <!-- <legend>Translate this term</legend>
-    <text> {{term}} </text> -->
     <p id="text">
-      <label> {% if userAnswer == cleanedAnswer %}
+      <label> {% if outcome %}
         Correct!
         {% else %}
         Incorrect;
         {% endif %}
       </label>
-      <text> <i>{{term}}</i> means <i>{{fullAnswer}}</i>.</text>
+      <text><i>{{term}}</i>  means  <i>{{fullAnswer}}</i>.</text>
     </p>
     <button class="button" type="submit">Continue</button>
 </form>
