@@ -10,7 +10,8 @@
   <i><label id="text">new term:</label></i>
   <input name="newTerm" type="text" placeholder="text here" />
   <text> {{newTerm}} </text>
-  <i><label id="text">new definition:</label></i>
+  <br>
+  <i><label id="text">definition:</label></i>
   <input name="newDefinition" type="text" placeholder="text here" />
   <text> {{newDefinition}} </text>
   <button class="button" type="submit">Create Term</button>
@@ -18,10 +19,9 @@
 <!--user has finished creating the new JSON file for their flashcards-->
 <!--direct user to /homepage so they can choose to start quiz with new set-->
 <form method="POST" action="/createCardDeck">
+  <br>
   <input name="newCardDeckTitle" type="text" placeholder="enter title" />
-  <!--comment...-->
   <input id="text" name='folderName' type="hidden" value='{{folderName}}'/>
-  <!-- <text> {{newCardDeckTitle}} </text> -->
   <button class="button" type="submit">Done</button>
 </form>
 

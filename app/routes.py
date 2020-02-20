@@ -2,54 +2,50 @@
 # -find a way to provide answer without clicking each time
 # -add a "Home" button
 # -figure out how to center text in quizBox
-# -add "Back" button to quizPage
-# -allow user to create new flashcard sets from homepage
+# -figure out how to split vocab terms by "/" and except either answer
 
 from flask import render_template, flash, request, redirect
 from app import app
 import os
 from quizFunctions import getCardDeckFolders, createCardDeckFolder, \
-getCardDeckFiles, fillCardDeck, createCardDeck, startGame, randomTerm, \
+getCardDeckFiles, fillCardDeck, emptyCardDeck, createCardDeck, startGame, randomTerm, \
 cardDeckSelection, answer, cleanString
 
-# TODO figure out what page homepage should be
+
 @app.route('/', methods=['GET'])
 # user can choose to create a new flashcard set or continue to quiz using \
 # existing files
 @app.route('/homepage', methods=['GET', 'POST'])
 def homepage():
     if request.method == "GET":
-        print("line22", os.getcwd())
         return render_template('homepage.html')
-    #user chooses to continue to quiz
-    if request.method == "POST":
-        # TODO why is this not printing?
-        print("line27", os.getcwd())
-        return render_template('quizCardDeckFolders.html')
+
 # user can select an existing flashcard deck folder for their new deck
 # or create a new flashcard deck folder
 @app.route('/selectCardDeckFolder', methods=['GET', 'POST'])
 def newCardDeck():
     if request.method == "GET":
+        os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
         cardDeckFolders = getCardDeckFolders()
         return render_template('selectCardDeckFolder.html',
             folders=cardDeckFolders
-        )
+            )
+
     if request.method == "POST":
         try:
             #if user decides to create new card deck folder, add their new folder to
             #VocabQuiz/FlashcardDeckFolders
             newFolder = request.form['newCardDeckFolder']
-            print("line 40", os.getcwd())
             newFolder = createCardDeckFolder(newFolder)
             os.chdir("..")
-            #flash message that folder was created
             # flash("New folder created! Select it below.")
             return render_template('selectCardDeckFolder.html',
                 folders=getCardDeckFolders()
             )
         except:
             return redirect('/')
+
+
 # user can select language here
 # TODO is this app route even necessary? or should I combine this with above route?
 @app.route('/createCardDeck', methods=['GET', 'POST'])
@@ -67,9 +63,9 @@ def createCardDeckProcess():
             if 'newCardDeckTitle' in request.form:
                 newDeckTitle = request.form['newCardDeckTitle']
                 folderName=request.form['folderName']
-                print("line67")
                 os.chdir("./" + folderName)
                 createCardDeck(newDeckTitle)
+                emptyCardDeck()
                 os.chdir("..")
                 return render_template('homepage.html',
                     folderName=folderName
@@ -77,15 +73,15 @@ def createCardDeckProcess():
             else:
                 newTerm = request.form['newTerm']
                 newDefinition = request.form['newDefinition']
-                print("New term: ", newTerm)
-                print("New def: ", newDefinition)
                 folderName = request.form['folderName']
+                fillCardDeck(newTerm, newDefinition)
                 return render_template('createCardDeck.html',
-                    fillCardDeck=fillCardDeck(newTerm, newDefinition),
                     folderName=folderName
                     )
         except:
             return redirect('/')
+
+
 # if user selects "Continue to Quiz" on /homepage, direct user here
 @app.route('/quizCardDeckFolders', methods=['POST'])
 def quizCardDeckFolders():
@@ -93,10 +89,16 @@ def quizCardDeckFolders():
         # glob for all possible flashcard folders
         cardDeckFolders = getCardDeckFolders()
         return render_template('quizCardDeckFolders.html',
-        folders=cardDeckFolders
-        )
+            folders=cardDeckFolders
+            )
     except:
-        return redirect('/')
+        # fix the pathway to correct directory
+        # TODO: figure out how to get to VocabQuiz without rest of this pathway
+        os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
+        cardDeckFolders = getCardDeckFolders()
+        return render_template('quizCardDeckFolders.html',
+            folders=cardDeckFolders
+            )
 
 
 @app.route('/quizCardDeck', methods=['POST'])
@@ -105,8 +107,8 @@ def quizCardDeck():
         deckFolder = request.form['cardDeckFolders']
         #retrieve user's 'folder' selection from form and return files from it
         return render_template('quizCardDeck.html',
-        files = getCardDeckFiles(deckFolder)
-        )
+            files = getCardDeckFiles(deckFolder)
+            )
     except:
         return redirect('/')
 

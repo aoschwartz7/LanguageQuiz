@@ -56,14 +56,25 @@ def createCardDeckFolder(folderName):
     # folderName)
 
 # function name: fillCardDeck()
-# parameters: folderName, newTerm, new Definition
-# application: create new flashcard deck in chosen directory
+# parameters: newTerm, new Definition
+# application: create new flashcard deck
 # output: NA
 # called by: routes.py/createCardDeck
 def fillCardDeck(newTerm, newDefinition):
-    #call global variable newCardDeck{} so we can add flashcards to it
+    # call global variable newCardDeck{} so we can add flashcards to it
     global newCardDeck
     newCardDeck[newTerm] = newDefinition
+
+# function name: emptyCardDeck()
+# parameters: NA
+# application: empty newCardDeck once user finishes creating the card deck
+# output: emptied newCardDeck
+# called by: routes.py
+def emptyCardDeck():
+    global newCardDeck
+    # figure out how to empty {} contents
+    newCardDeck = {}
+    return newCardDeck
 
 # function name: createCardDeck()
 # parameters: deckTitle
@@ -77,14 +88,6 @@ def createCardDeck(deckTitle):
     with open(fileName, "a+") as file:
         json.dump(newCardDeck, file)
 
-# def createCardDeck(folderName, deckTitle):
-#     global newCardDeck
-#     # change directory to folder that user selects
-#     os.chdir("FlashcardDeckFolders/" +
-#     folderName +"/")
-#     with open(deckTitle + '.json', "a+") as file:
-#         json.dump(newCardDeck, file)
-
 
 # function name: getCardDeckFiles()
 # parameters: userSelection
@@ -96,7 +99,7 @@ def getCardDeckFiles(deckFolder):
     # change the current working directory to the given path
     os.chdir("./" + deckFolder )
     fileNames = glob.glob("*.json")
-    fileNames = [filename.strip('.json') for filename in fileNames]
+    fileNames = [filename.split(".")[0] for filename in fileNames]
     return fileNames
 
 # function name: cardDeckSelection()
@@ -134,7 +137,7 @@ def answer(vocabTerm):
 # function called by: routes.py/quizPage
 def cleanString(stringToClean):
     #extraneous stuff to remove
-    articles = ["the ","an ", "a ", "el ", "la "]
+    articles = ["the ","an ", "a ", "el ", "la ", "to"]
     punctuation = [".", ",", ":", ";", "?"]
     stringToClean = stringToClean.lower()
     #if term is "el niño/la niña" ie, split by "/" first
