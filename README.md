@@ -3,12 +3,12 @@ Language Learner's Vocab Quiz
 This web application uses a Python-Flask framework to create a vocabulary quiz for users. It works with JSON representations of vocabulary files which can be created in the app.
 
 ### Table of Contents
-1. [Overview](#Overview)
+1. [Overview](#introduction)
 2. [Walkthrough](#Walkthrough)
 3. [How to run it](#How to run it)
 4. [How it works](#How it works)
 
-### Overview
+### This is the Overview <a name="introduction"></a>
 
 This app guides a user to create or select existing flashcard decks that they can use in a simple quiz. The quiz is structured to show user a term, have them provide the definition, and tell them if they are correct before proceeding to the next term. This quiz can be played using both localhost and Terminal.
 
