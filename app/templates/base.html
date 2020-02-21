@@ -2,12 +2,12 @@
 <!DOCTYPE HTML>
 <html lang = "en">
   <head>
-    <!--add Bootstrap-->
+    <!--add Bootstrap CSS-->
     <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
     crossorigin="anonymous">
-    <!--add style.CSS-->
+    <!--add my custom CSS from style.CSS-->
     <link rel="stylesheet"
           href="{{url_for('.static', filename='style.css')}}">
     <title>Quiz</title>
@@ -19,8 +19,8 @@
     <p class="pad"></p>
     </div>
     <div class="quizBox">
-      <a href="/">home</a>
-      <!-- this is where the other html page content will go -->
+      <a href="/" style="position:relative; left:90%; top:-10px; color:#90ee90" href="/">Home</a>
+      <!-- this is where the rest of the content will go -->
       {% block content %}{% endblock %}
     </div>
   </body>

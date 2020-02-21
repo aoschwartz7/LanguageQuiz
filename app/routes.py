@@ -46,8 +46,6 @@ def newCardDeck():
             return redirect('/')
 
 
-# user can select language here
-# TODO is this app route even necessary? or should I combine this with above route?
 @app.route('/createCardDeck', methods=['GET', 'POST'])
 def createCardDeckProcess():
     if request.method == "POST":

@@ -69,12 +69,10 @@ def fillCardDeck(newTerm, newDefinition):
 # parameters: NA
 # application: empty newCardDeck once user finishes creating the card deck
 # output: emptied newCardDeck
-# called by: routes.py
+# called by: routes.py/createCardDeck
 def emptyCardDeck():
     global newCardDeck
-    # figure out how to empty {} contents
     newCardDeck = {}
-    return newCardDeck
 
 # function name: createCardDeck()
 # parameters: deckTitle
