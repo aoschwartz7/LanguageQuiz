@@ -14,7 +14,7 @@ This app guides a user to create or select existing flashcard decks that they ca
 
 ### Walkthrough <a name="walkthrough"></a>
 
-![alt text](/READMEimages/image1.png)
+![alt text](image1.png)
 Welcome Page where user can select to either create new flashcards or start a quiz with existing flashcard sets.
 
 ![](/READMEimages/image2.PNG)
