@@ -3,43 +3,43 @@ Language Learner's Vocab Quiz
 This web application uses a Python-Flask framework to create a vocabulary quiz for users. It works with JSON representations of vocabulary files which can be created in the app.
 
 ### Table of Contents
-1. [Overview](#introduction)
-2. [Walkthrough](#Walkthrough)
-3. [How to run it](#How to run it)
-4. [How it works](#How it works)
+1. [Overview](#overview)
+2. [Walkthrough](#walkthrough)
+3. [How to run it](#howtorunit)
+4. [How it works](#howitworks)
 
-### This is the Overview <a name="introduction"></a>
+### Overview <a name="overview"></a>
 
 This app guides a user to create or select existing flashcard decks that they can use in a simple quiz. The quiz is structured to show user a term, have them provide the definition, and tell them if they are correct before proceeding to the next term. This quiz can be played using both localhost and Terminal.
 
-### Walkthrough
+### Walkthrough <a name="walkthrough"></a>
 
-[image1]
+![](/READMEimages/image1.PNG)
 Welcome Page where user can select to either create new flashcards or start a quiz with existing flashcard sets.
 
-[image2]
+![](/READMEimages/image2.PNG)
 If user chooses to create new flashcards, they can select an existing folder or create a new one where they will store their flashcards.
 
-[image3]
+![](/READMEimages/image3.PNG)
 Allow user to create new flashcards until the set is complete, then redirect user back to Welcome Page.
 
-[image4]
+![](/READMEimages/image1.PNG)
 User can now choose to continue to the quiz.
 
-[image5]
+![](/READMEimages/image4.PNG)
 User picks a folder containing flashcards.
 
-[image6]
+![](/READMEimages/image5.PNG)
 User picks a flashcard set.
 
-[image7]
+![](/READMEimages/image6.PNG)
 Quiz the user with randomized terms from the flashcard set. User can then check their answer or skip to the next word.
 
-[image8]
+![](/READMEimages/image7.PNG)
 If user decides to check their answer, tell them if they're correct. If not, show correct answer.
 
 
-### How to run it
+### How to run it <a name="howtorunit"></a>
 
 1) Install Python [link]
 2) Install Flask [link]
@@ -57,7 +57,7 @@ If user decides to check their answer, tell them if they're correct. If not, sho
    $ ctrl + c
    $ deactivate (deactivates virtual environment)
 
-### How it works
+### How it works <a name="howitworks"></a>
 
 The application is made up of the following files:
 
