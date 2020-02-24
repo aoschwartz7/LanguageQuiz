@@ -14,37 +14,18 @@ This app guides a user to create or select existing flashcard decks that they ca
 
 ### Walkthrough <a name="walkthrough"></a>
 
-![alt text](image1.png)
-Welcome Page where user can select to either create new flashcards or start a quiz with existing flashcard sets.
-![alt text](image.jpg)
+Click the image for a link to a video walkthrough of the application.
+[![walkthrough](Walkthroughimage.png)](https://vimeo.com/393507157 "Walkthrough")
 
-![](/READMEimages/image2.PNG)
-If user chooses to create new flashcards, they can select an existing folder or create a new one where they will store their flashcards.
-
-![](/READMEimages/image3.PNG)
-Allow user to create new flashcards until the set is complete, then redirect user back to Welcome Page.
-
-![](/READMEimages/image1.PNG)
-User can now choose to continue to the quiz.
-
-![](/READMEimages/image4.PNG)
-User picks a folder containing flashcards.
-
-![](/READMEimages/image5.PNG)
-User picks a flashcard set.
-
-![](/READMEimages/image6.PNG)
-Quiz the user with randomized terms from the flashcard set. User can then check their answer or skip to the next word.
-
-![](/READMEimages/image7.PNG)
-If user decides to check their answer, tell them if they're correct. If not, show correct answer.
+Click here for a walkthrough showing Terminal use.
+[![terminal walkthrough](WalkthroughTerminalimage.png)](https://vimeo.com/393508434 "Walkthrough with Terminal")
 
 
 ### How to run it <a name="howtorunit"></a>
 
-1) Install Python [link]
-2) Install Flask [link]
-3) Download this repository [link]
+1) [Install Python 3](https://www.python.org/downloads/)
+2) [Install Flask] (https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask)
+3) [Clone/download this repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
 4) In Terminal change directory to /VocabQuiz
 5) To play the game in Terminal, type this into the command line:
    $ python quizFunctions.py
