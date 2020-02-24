@@ -24,7 +24,7 @@ Click here for a walkthrough showing Terminal use.
 ### How to run it <a name="howtorunit"></a>
 
 1) [Install Python 3](https://www.python.org/downloads/)
-2) [Install Flask] (https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask)
+2) [Install Flask](https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask)
 3) [Clone/download this repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
 4) In Terminal change directory to /VocabQuiz
 5) To play the game in Terminal, type this into the command line:
