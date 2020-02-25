@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
+
+<!-- Prompt the user with a randomized flashcard term and have them give an
+        answer. -->
 <form method="POST">
-  <!-- <form method="POST" action="/checkAnswer"> -->
-  <!-- prompt user for answer in whatever language selection they made -->
     <legend id="text">Define the following:</legend>
-    <!--random()function from wordBank.py is called in routes.py as "term"; \
-        show randomized term from wordbank as german_word-->
     <text id="text">{{term}}</text>
     <br>
     <input name='vocabTerm' type="hidden" value='{{term}}'/>
       <input name="userAnswer" type="text" placeholder="answer" />
       <text> {{userAnswer}} </text>
-    <!--create "Check" button to redirect user to checkAnswer.html-->
+    <!-- Check the user's answer. -->
     <button class="button" href="checkAnswer.html" type="submit">Check</button>
 </form>
 
+
+<!-- Present the user with the next term.  -->
 <form method="GET">
   <button class="button" href="quizPage.html" type="submit">Next word</button>
 </form>
+
 
 {% endblock %}

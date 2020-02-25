@@ -1,9 +1,8 @@
-<!-- TO DO -->
-<!-- -when user clicks "Check", remove "text here" -->
-<!-- -reformat checked answer so it says, vertically: "term", correct/incorrect/almost, "term" means "definition" -->
-
 {% extends "base.html" %}
 {% block content %}
+
+
+<!-- Tell the user if their answer is correct or not.  -->
 <form method="GET">
     <p id="text">
       <label> {% if outcome %}
@@ -16,4 +15,6 @@
     </p>
     <button class="button" type="submit">Continue</button>
 </form>
+
+
 {% endblock %}

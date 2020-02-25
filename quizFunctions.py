@@ -1,29 +1,32 @@
 # There are two sections to this file:
-# Section 1) Python-Flask App Functions: contains functions for Python-Flask app.
-# Section 2) Local-use Functions: builds off Section 1 to allow for app's local \
-#            use with Terminal.
+# Section 1) Python-Flask content: contains functions for Python-Flask app so the
+#               app can run on local 5000.
+# Section 2) Terminal-use content: builds off Section 1 to allow for app's use
+#                with Terminal.
 # ------------------------------------------------------------------------------
 import json
 import random
 import time
-from datetime import datetime
 import glob, os
 # ------------------------------------------------------------------------------
-# Section 1) Python-Flask App Functions
+# Section 1) Python-Flask content
 # ------------------------------------------------------------------------------
 
-# create dictionary and list instances
+# Create dictionary and list instances for creating new flashcards and
+#     loading pre-existing flashcards.
 wordBank = {}
 wordBankKeys = []
 newCardDeck = {}
 cardDeckSelection = ""
 
+
 # function name: startGame()
 # parameters: lessonFile
-# application: load JSON dictionary from lessonFile as the global variable wordBank;
-#              create list of wordBank keys so randomWord() can randomize terms
+# application:     Load JSON dictionary content (flashcards) from lessonFile as
+#                  the global variable wordBank; create list of wordBank keys
+#                  so randomWord() can randomize terms.
 # output: NA
-# called by: routes.py/loadLesson, Section 2)
+# called by: routes.py/loadLesson, Section 2) gameTerminal()
 def startGame(lessonFile):
     global wordBank
     global wordBankKeys
@@ -31,53 +34,55 @@ def startGame(lessonFile):
         wordBank = json.load(jsonFile)
     wordBankKeys = list(wordBank.keys())
 
+
 # function name: getCardDeckFolders()
 # parameters: NA
-# application: open VocabQuiz/Languages pathway and return folder contents \
-#             (ie GermanToSpanish, GermantoEnglish, etc)
-# output: folderNames within VocabQuiz/Languages pathway
-# called by: routes.py/selectLanguage, Section 2)
-# TODO: figure out how to reduce pathway
+# application:      Navigate pathway to VocabQuiz/FlashcardDeckFolders where
+#                   folders containing flashcard sets are located.
+# output: folderNames
+# called by: routes.py/selectCardDeckFolder, routes.py/quizCardDeckFolders
 def getCardDeckFolders():
-    #change the current working directory to path containing card deck folders
+    # Change the current working directory.
     os.chdir("./FlashcardDeckFolders")
     folderNames = glob.glob("*")
     return folderNames
 
+
 # function name: createCardDeckFolder()
 # parameters: folderName
-# application: create new flashcard deck directory for user
-# output:
-# called by:
-# TODO: figure out how to reduce pathway
+# application:    Create new flashcard deck directory in
+#                 VocabQuiz/FlashcardDeckFolders for user.
+# output: NA
+# called by: routes.py/selectCardDeckFolder
 def createCardDeckFolder(folderName):
     os.mkdir(folderName)
-    # os.mkdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz/FlashcardDeckFolders/" +
-    # folderName)
+
 
 # function name: fillCardDeck()
-# parameters: newTerm, new Definition
-# application: create new flashcard deck
+# parameters: newTerm, newDefinition
+# application:    Create new flashcard deck.
 # output: NA
-# called by: routes.py/createCardDeck
+# called by: routes.py/createCardDeck, Section 2) createFlashcardSet()
 def fillCardDeck(newTerm, newDefinition):
-    # call global variable newCardDeck{} so we can add flashcards to it
+    # Call global variable newCardDeck{} so we can add flashcards to it.
     global newCardDeck
     newCardDeck[newTerm] = newDefinition
 
+
 # function name: emptyCardDeck()
 # parameters: NA
-# application: empty newCardDeck once user finishes creating the card deck
-# output: emptied newCardDeck
+# application:    Empty newCardDeck once user finishes making it.
+# output: NA
 # called by: routes.py/createCardDeck
 def emptyCardDeck():
     global newCardDeck
     newCardDeck = {}
 
+
 # function name: createCardDeck()
 # parameters: deckTitle
-# application: create new JSON file named after user-assigned title
-#              and append newCardDeck to file
+# application:    Create new JSON file named after user-assigned title
+#                 and append newCardDeck to file.
 # output: NA
 # called by: routes.py/createCardDeck
 def createCardDeck(deckTitle):
@@ -88,108 +93,96 @@ def createCardDeck(deckTitle):
 
 
 # function name: getCardDeckFiles()
-# parameters: userSelection
-# application: retrieve existing .json fileNames that contain vocab dictionaries \
-#              when user selects a language in routes.py/loadLesson
+# parameters: deckFolder
+# application: Retrieve existing .json fileNames that contain flashcards.
 # output: fileNames
-# called by: routes.py/selectLesson
+# called by: routes.py/quizCardDeck, Section 2) showCardDecks()
 def getCardDeckFiles(deckFolder):
-    # change the current working directory to the given path
+    # Change the current working directory to the given path.
     os.chdir("./" + deckFolder )
     fileNames = glob.glob("*.json")
     fileNames = [filename.split(".")[0] for filename in fileNames]
     return fileNames
 
-# function name: cardDeckSelection()
-# parameters: NA
-# application: this is a helper function that can be used to return the value of \
-#              the global variable cardDeckSelection
-# outputs: cardDeckSelection
-# called by: routes.py/quizPage
-# def cardDeckSelection():
-#     return cardDeckSelection
 
 # function name: randomTerm()
 # parameters: NA
-# application: return a random term from the global variable wordBankKeys
-# outputs/return values: random term
-# function called by: routes.py/quizPage
+# application:    Return a random term from the global variable wordBankKeys.
+# output: random term
+# function called by: routes.py/quizPage, Section 2) quizTerm()
 def randomTerm():
     return random.sample(wordBankKeys, 1)[0]
 
 # function name: answer()
 # parameters: vocabTerm
-# application: uses the wordBank dictionary key-value pairing to show the \
-#              correctAnswer (value) for the current vocabTerm (key)
-# outputs: correctAnswer
-# function called by: routes.py/quizPage
+# application:    Return vocabTerm's correctAnswer from wordBank.
+# output: correctAnswer
+# function called by: routes.py/quizPage, Section 2) quizTerm()
 def answer(vocabTerm):
     correctAnswer = wordBank[vocabTerm]
     return correctAnswer
 
 # function name: cleanString()
 # parameters: stringToClean
-# application: strips away articles from both userAnswer and correctAnswer \
-#              to make user's response more flexible
+# application:    Strips away articles and punctuation from both userAnswer and
+#                 correctAnswer to make user's response more flexible.
 # output: stringToClean
-# function called by: routes.py/quizPage
+# function called by: routes.py/quizPage, Section 2) quizTerm()
 def cleanString(stringToClean):
-    #extraneous stuff to remove
+    # Extraneous stuff to remove:
     articles = ["the ","an ", "a ", "el ", "la ", "to"]
     punctuation = [".", ",", ":", ";", "?"]
     stringToClean = stringToClean.lower()
-    #if term is "el niño/la niña" ie, split by "/" first
+    # If term is "el niño/la niña" ie, split by "/" first.
     stringToClean.split("/")
     stringToClean.split(' ')
-    #remove articles and punctuation
+    # Remove articles and punctuation.
     for x in articles:
         stringToClean = stringToClean.replace(x, "")
     for x in punctuation:
         stringToClean = stringToClean.replace(x, " ")
-    stringToClean = ' '.join(stringToClean)
-    #remove whitespace
+    stringToClean = ''.join(stringToClean)
+    # Remove whitespace.
     stringToClean = stringToClean.strip()
     return stringToClean
 # ------------------------------------------------------------------------------
-# Section 2) Local-use Functions: builds off Section 1 to allow for app's local \
-#            use with Terminal.
+
+# Section 2) Terminal-use content: builds off Section 1 to allow for app's use
+#                with Terminal.
+
 # ------------------------------------------------------------------------------
 # function name: quizTerm()
 # parameters: vocabTerm
-# application: quizzes user on vocabTerm and compares userAnswer to correctAnswer
+# application:    Quizzes user on vocabTerm and compares userAnswer to correctAnswer.
 # outputs: Boolean T/F
-# function called by: gameTerminal(), reTestWrongWords()
-def quizTerm(vocabTerm):
-    userAnswer = input("What does {} mean? ".format(vocabTerm))
-    cleanedResponse = stringToClean(userAnswer)
-    cleanedAnswer = stringToClean(answer(vocabTerm))
-    if cleanedResponse == cleanedAnswer:
-        print("correct! {} means {}".format(vocabTerm, answer(vocabTerm)))
+# function called by: gameTerminal()
+def quizTerm():
+    term = randomTerm()
+    time.sleep(1)
+    # Quiz user with flashcard.
+    userAnswer = input("What does {} mean? ".format(term))
+    userAnswer = cleanString(userAnswer)
+    correctAnswer = cleanString(answer(term))
+    time.sleep(1)
+    # See if they're correct.
+    if userAnswer == correctAnswer:
+        print("correct! {} means {} \n".format(term, answer(term)))
         return True
-    elif cleanedResponse != corrcleanedAnswerectAnswer:
-        print("incorrect. {} means {}".format(vocabTerm, answer(vocabTerm)))
+    # In gameTerminal(), 'done' will break While loop.
+    elif userAnswer == 'done':
         return False
+    elif userAnswer != correctAnswer:
+        print("incorrect. {} means {} \n".format(term, answer(term)))
+        return True
 
-# function name: createTimeStamp()
+
+# function name: createFlashcardSet()
 # parameters: NA
-# application: creates a timeStampString for naming flashcard sets created \
-#              using createFlashCardSet()
-# output: timeStampString
-# function called by: createFlashCardSet()
-
-def createTimeStamp():
-    timeStamp = datetime.now()
-    timeStampString = str(timeStamp.year) + str(timeStamp.month) \
-    + str(timeStamp.day)
-    return timeStampString
-
-# function name: createFlashCardSet()
-# parameters: NA
-# application: allows user to create a new flashcard set as a JSON file
+# application:    Allows user to create a new flashcard set (ie JSON file).
 # output: NA
 # function called by: __main__
-def createFlashCardSet():
-    #prompt user to create new flashcard set if they would like to
+def createFlashcardSet():
+    # Prompt user to create new flashcard set if they would like to.
     while True:
         makeSet = input("Would you like to create a new flashcard set? (y/n) ")
         if makeSet == 'n':
@@ -198,77 +191,74 @@ def createFlashCardSet():
             break
         else:
             print("enter 'y' or 'n' ")
-
-    #prompt user for title
-
-    setTitle = input("Enter a title for this flashcard set: ")
-    print("Enter 'done' when finished")
-    #prompt user for new vocab
+    time.sleep(1)
+    # Prompt user for new cards.
+    print("Enter 'done' when finished.\n")
     while True:
+        time.sleep(1)
         newTerm = input("Enter new term: ")
         if newTerm == "done":
             break
         newDefinition = input("Enter definition for term: ")
         if newDefinition == "done":
             break
-        #add term and definition to newCardDeck{}
         print("adding %s : %s\n" % (newTerm, newDefinition))
-        newCardDeck[newTerm] = newDefinition
-    #create timestamped JSON file for new set
-    cardSetFile = createTimeStamp() + "_" + setTitle + ".json"
-    with open(cardSetFile, "a+") as file:
-        json.dump(newCardDeck, file)
+        # Add new card to deck.
+        fillCardDeck(newTerm, newDefinition)
+    # Change path to folder containing flashcards.
+    os.chdir('./TerminalFlashcards')
+    setTitle = input("\nEnter a title for this flashcard set: ")
+    # Add new flashcard deck to folder.
+    createCardDeck(setTitle)
+    # Navigate back to /VocabQuiz.
+    os.chdir('..')
 
-# function name: accessFiles()
-# parameters: NA
-# application: prints flashcard set file names, asks user to select one \
-#              for the quiz, opens that file and launches the game
+
+# function name: showCardDecks()
+# parameters: TerminalFlashcards
+# application:    Prints flashcard set file names.
 # output: NA
 # function is called by: __main__
-def accessFiles():
-    #search within directory for JSON files
-    os.chdir("./VocabQuiz")
-    # TODO don't need loop
-    for file in glob.glob("*.json"):
-        time.sleep(.5)
-        print(file)
-    time.sleep(2)
-    print("Which flashcard set would you like to open?")
-    time.sleep(2)
-    fileSelection = input("Type out the entire name of the file and then press \
-'Enter': ")
-    return fileSelection
+def showCardDecks(TerminalFlashcards):
+    fileList = getCardDeckFiles(TerminalFlashcards)
+    for fileName in fileList:
+        print(fileName)
+        time.sleep(0.2)
+
 
 # function name: gameTerminal()
 # parameters: NA
-# application: runs startGame() to select vocab file and initialize wordBank;\
-#              compares userAnswer to correctAnswer; \
-#              creates new JSON file and appends wrong wrongs for re-testing later
+# application:    Show user available card decks for the quiz, have them select
+#                 a deck, then start the quiz with that file.
 # output: N/A
-# function is called by: "__main__"
+# function is called by: __main__
 
 def gameTerminal():
-    print("Here is a list of the flashcard sets stored in your VocabQuiz folder:")
-    time.sleep(2)
-    #show user all JSON files contained in current directory
-    accessFiles()
+    print("Here are your available flashcard sets: \n")
     time.sleep(.5)
-    #run startGame() with user's fileSelection
-    print("Launching quiz...")
-    time.sleep(3)
-    startGame(fileSelection)
-    #loop through terms in JSON file selecton
-    for i in range(fileSelection):
-        quizTerm()
-    print("That's the entire vocab set. Program will now quit. ")
-    quit()
+    #show user all JSON files stored in /TerminalFlashcards
+    showCardDecks("TerminalFlashcards")
+    time.sleep(1)
+    file = input("\nSelect a set for the quiz by entering its full name as shown\
+ above, then hit 'Enter': \n")
+    startGame(file)
+    time.sleep(.5)
+    print("\nTo end the quiz, enter 'done'.\n")
+    time.sleep(.5)
+    keepPlaying = True
+    # If user enters 'done' in quizTerm(), False gets triggered to break While loop.
+    while keepPlaying:
+        keepPlaying = quizTerm()
+    time.sleep(.5)
+    print("\nThanks for playing!")
 
+# __main__ runs when the user runs quizFunctions.py in Terminal.
 
-# TODO comment here to say when this code would run
 if __name__=="__main__":
-    accessFiles()
-    # print("----------------------------------------------------")
-    # print("Welcome to the Language Learner's Vocabulary Quiz!")
-    # time.sleep(2)
-    # createFlashCardSet()
-    # gameTerminal()
+    time.sleep(.5)
+    print("\nWelcome to the Language Learner's Vocab Quiz!\n")
+    time.sleep(.5)
+    createFlashcardSet()
+    time.sleep(.5)
+    gameTerminal()
+    time.sleep(1)

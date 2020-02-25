@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<!--give user choice to create a new flashcard set OR continue with existing files-->
+
+
+<!-- Give user the choice to create a new flashcard set OR continue with
+      existing files. -->
 <form method="GET" action="/selectCardDeckFolder">
   <h4 id="text">Welcome to my Language Learner's Vocab Quiz!</h4>
   <button class="button" type="submit">Make New Flashcard Deck</button>
 </form>
-<!--send user to /quizCardDeckFolders start loading the quiz-->
+
+
+<!-- Send user to /quizCardDeckFolders to select a flashcard folder. -->
 <form method="POST" action="/quizCardDeckFolders">
   <button class="button" type="submit">Continue to Quiz</button>
 </form>
+
 
 {% endblock %}

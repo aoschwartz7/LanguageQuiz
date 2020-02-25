@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<!--user selected flashcard folder for new deck in /selectCardDeckFolder-->
-<!--allow user to create new cards -->
+
+<!-- Allow user to create new cards. -->
 <form method="POST" action="/createCardDeck">
   <h5 id="text">Create new flashcards below. When finished, enter a title for
     your new deck and select 'Done'.</h5>
-    <!-- comment....-->
+    <!-- The hidden input below allows this route to capture this form. -->
   <input id="text" name='folderName' type="hidden" value='{{folderName}}'/>
   <i><label id="text">new term:</label></i>
   <input name="newTerm" type="text" placeholder="text here" />
@@ -16,8 +16,9 @@
   <text> {{newDefinition}} </text>
   <button class="button" type="submit">Create Term</button>
 </form>
-<!--user has finished creating the new JSON file for their flashcards-->
-<!--direct user to /homepage so they can choose to start quiz with new set-->
+
+
+<!-- Allow user to title their new deck once they finish making cards. -->
 <form method="POST" action="/createCardDeck">
   <br>
   <input name="newCardDeckTitle" type="text" placeholder="enter title" />

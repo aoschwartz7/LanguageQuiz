@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<!--user has picked a flashcard folder and can now select a flashcard deck
-for the quiz-->
+
+
+<!-- Allow the user to select a flashcard set for the quiz. -->
 <form method="POST" action=/loadQuiz>
   <h5 id="text">Select a flashcard set:</h5>
   <select name="cardDecks">
@@ -11,5 +12,6 @@ for the quiz-->
   </select>
   <button class="button" type="submit">Continue</button>
 </form>
+
 
 {% endblock %}

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<!--show user existing flashcard deck folders-->
-<!--upon selection, direct user to quizCardDeck to pick a flashcard set
-from this folder for the quiz-->
+
+
+<!-- Show user existing flashcard deck folders. Once they pick one,
+        direct them to /quizCardDeck to pick a flashcard set. -->
 <form method="POST" action="/quizCardDeck">
   <h5 id="text">Select the folder your flashcard set is in: </h5>
   <select name="cardDeckFolders">
@@ -12,4 +13,6 @@ from this folder for the quiz-->
   </select>
   <button class="button" type="submit">Continue</button>
 </form>
+
+
 {% endblock %}

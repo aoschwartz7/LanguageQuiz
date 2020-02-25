@@ -1,13 +1,15 @@
-<!-- this is the base template that will be extended across all html pages  -->
+<!-- This base template that will be extend HTML and CSS across all pages. -->
+
+
 <!DOCTYPE HTML>
 <html lang = "en">
   <head>
-    <!--add Bootstrap CSS-->
+    <!-- Add Bootstrap CSS. -->
     <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
     crossorigin="anonymous">
-    <!--add my custom CSS from style.CSS-->
+    <!-- Add my custom CSS from style.CSS -->
     <link rel="stylesheet"
           href="{{url_for('.static', filename='style.css')}}">
     <title>Quiz</title>
@@ -15,12 +17,13 @@
   </head>
   <body style = "background-color:#0F4877;">
     <div align = "center">
-    <!--add space between content and border-->
+    <!-- Add space between content and the border with class = "pad". -->
     <p class="pad"></p>
     </div>
     <div class="quizBox">
+      <!-- Add a Home button. -->
       <a href="/" style="position:relative; left:90%; top:-10px; color:#90ee90" href="/">Home</a>
-      <!-- this is where the rest of the content will go -->
+      <!-- This is where other pages' content will go. -->
       {% block content %}{% endblock %}
     </div>
   </body>

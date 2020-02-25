@@ -1,12 +1,15 @@
 <style>
-/*add space between content and border */
+/* Add space between content and border. */
   p.pad {
     padding-top: 40px;
         }
+        
   #text{
   color: #90ee90;
   font-family: HelveticaNeue-Thin
        }
+
+ /* Create a centered box for all content. */
  .quizBox {
    margin: auto;
    background-color: #313B72;
@@ -15,6 +18,7 @@
    solid #272F5B;
    padding: 10px;
           }
+
   .button {
   background-color: #3d498f;
   /*404D96 3d498f 404096 503d8f  */
