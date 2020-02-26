@@ -15,7 +15,7 @@ This app guides a user to create or select existing flashcard decks that they ca
 ### Walkthrough <a name="walkthrough"></a>
 
 Click the image for a link to a video walkthrough of the application.
-[![walkthrough](Walkthroughimage.png)](https://vimeo.com/393507157 "Walkthrough")
+[![walkthrough](Walkthroughimage.png)](https://vimeo.com/393507157s=200){width="50%"}
 
 Click here for a walkthrough showing Terminal use.
 [![terminal walkthrough](WalkthroughTerminalimage.png)](https://vimeo.com/393508434 "Walkthrough with Terminal")
