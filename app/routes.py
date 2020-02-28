@@ -5,6 +5,8 @@ from quizFunctions import getCardDeckFolders, createCardDeckFolder, \
 getCardDeckFiles, fillCardDeck, emptyCardDeck, createCardDeck, startGame, \
 randomTerm, cardDeckSelection, answer, cleanString
 
+global directoryPath
+directoryPath = os.getcwd()
 
 @app.route('/', methods=['GET'])
 
@@ -19,7 +21,7 @@ def homepage():
 def newCardDeck():
     if request.method == "GET":
         # TODO: fix this pathway
-        os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
+        os.chdir(directoryPath)
         # Retrieve folders containing flashcard decks.
         cardDeckFolders = getCardDeckFolders()
         return render_template('selectCardDeckFolder.html',
