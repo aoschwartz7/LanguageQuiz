@@ -4,7 +4,7 @@ This web application uses a Python-Flask framework to create a vocabulary quiz f
 
 ### Table of Contents
 1. [Overview](#overview)
-2. [Walkthrough](#walkthrough)
+2. [Video Walkthroughs](#walkthroughvids)
 3. [How to run it](#howtorunit)
 4. [How it works](#howitworks)
 
@@ -12,17 +12,20 @@ This web application uses a Python-Flask framework to create a vocabulary quiz f
 
 This app guides a user to create or select existing flashcard decks that they can use in a simple quiz. The quiz is structured to show user a term, have them provide the definition, and tell them if they are correct before proceeding to the next term. This quiz can be played using both localhost and Terminal.
 
-### Walkthrough <a name="walkthrough"></a>
-
-<iframe src="https://player.vimeo.com/video/393507157" width="640" height="400" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+### Video Walkthroughs <a name="walkthroughvids"></a>
 
 
 
-Click the image for a link to a video walkthrough of the application.
-[![walkthrough](Walkthroughimage.png)](https://vimeo.com/393507157)
 
-Click here for a walkthrough showing Terminal use.
-[![terminal walkthrough](WalkthroughTerminalimage.png)](https://vimeo.com/393508434 "Walkthrough with Terminal")
+*Click the image for a link to a video walkthrough of the application.*
+[![walkthrough](Walkthroughimage.png)](https://vimeo.com/393507157 "Walkthrough with Browser")
+
+*Here's a walkthrough showing the app's use in Browser and Terminal.*
+[![terminal walkthrough](WalkthroughTerminalimage.png)](https://vimeo.com/393508434 "Walkthrough with Browser/Terminal")
+
+
+*This video show's the app's use in just Terminal.*
+[![terminal walkthrough](WalkthroughTerminal2image.png)](https://vimeo.com/395985669 "Walkthrough with Terminal")
 
 
 ### How to run it <a name="howtorunit"></a>
