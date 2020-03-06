@@ -10,7 +10,7 @@ This web application uses a Python-Flask framework to create a vocabulary quiz f
 
 ### Overview <a name="overview"></a>
 
-This app guides a user to create or select existing flashcard decks that they can use in a simple quiz. The quiz is structured to show user a term, have them provide the definition, and tell them if they are correct before proceeding to the next term. This quiz can be played using both localhost and Terminal.
+This app guides a user to create or select existing flashcard decks that they can use in a simple quiz. The quiz is structured to show user a term, have them provide the definition, and tell them if they are correct before proceeding to the next term. This quiz can be played using both browser and Terminal.
 
 ### Video Walkthroughs <a name="walkthroughvids"></a>
 
