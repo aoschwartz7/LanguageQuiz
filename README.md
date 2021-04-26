@@ -35,16 +35,16 @@ This app guides a user to create or select existing flashcard decks that they ca
 3) [Clone/download this repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
 4) In Terminal change directory to `/VocabQuiz`
 5) To play the game in Terminal, type this into the command line:
-   `$ python quizFunctions.py`
+   `$ python quizFunctions.py`. 
 6) To play the game using the GUI, activate the Flask virtual environment and run Flask:
-   `$ cd venv`
-   `$ source bin/activate`
-   `$ cd ..`
-   `$ flask run`
+   `$ cd venv`. 
+   `$ source bin/activate`. 
+   `$ cd ..`. 
+   `$ flask run`. 
 7) Open web browser and type this into address bar: http://localhost:5000/
 8) To stop running the game:
-   `$ ctrl + c`
-   `$ deactivate (deactivates virtual environment)`
+   `$ ctrl + c`. 
+   `$ deactivate (deactivates virtual environment)`. 
 
 ### How it works <a name="howitworks"></a>
 
