@@ -6,8 +6,8 @@
 # ------------------------------------------------------------------------------
 import json
 import random
-import time
 import glob, os
+import sys
 # ------------------------------------------------------------------------------
 # Section 1) Python-Flask content
 # ------------------------------------------------------------------------------
@@ -30,20 +30,27 @@ cardDeckSelection = ""
 def startGame(lessonFile):
     global wordBank
     global wordBankKeys
-    with open(lessonFile + '.json') as jsonFile:
-        wordBank = json.load(jsonFile)
+    try:
+        with open(lessonFile + '.json') as jsonFile:
+            wordBank = json.load(jsonFile)
+    except:
+        print("Please select an available set. Exiting..")
+        sys.exit(0)
+
     wordBankKeys = list(wordBank.keys())
 
 
 # function name: getCardDeckFolders()
 # parameters: NA
-# application:      Navigate pathway to VocabQuiz/FlashcardDeckFolders where
+# application:      Navigate pathway to VocabQuiz/Flashcards where
 #                   folders containing flashcard sets are located.
 # output: folderNames
 # called by: routes.py/selectCardDeckFolder, routes.py/quizCardDeckFolders
 def getCardDeckFolders():
     # Change the current working directory.
-    os.chdir("./FlashcardDeckFolders")
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(dir_path + "/Flashcards")
     folderNames = glob.glob("*")
     return folderNames
 
@@ -51,7 +58,7 @@ def getCardDeckFolders():
 # function name: createCardDeckFolder()
 # parameters: folderName
 # application:    Create new flashcard deck directory in
-#                 VocabQuiz/FlashcardDeckFolders for user.
+#                 VocabQuiz/Flashcards for user.
 # output: NA
 # called by: routes.py/selectCardDeckFolder
 def createCardDeckFolder(folderName):
@@ -158,12 +165,10 @@ def cleanString(stringToClean):
 # function called by: gameTerminal()
 def quizTerm():
     term = randomTerm()
-    time.sleep(1)
     # Quiz user with flashcard.
     userAnswer = input("What does {} mean? ".format(term))
     userAnswer = cleanString(userAnswer)
     correctAnswer = cleanString(answer(term))
-    time.sleep(1)
     # See if they're correct.
     if userAnswer == correctAnswer:
         print("correct! {} means {} \n".format(term, answer(term)))
@@ -191,11 +196,9 @@ def createFlashcardSet():
             break
         else:
             print("enter 'y' or 'n' ")
-    time.sleep(1)
     # Prompt user for new cards.
     print("Enter 'done' when finished.\n")
     while True:
-        time.sleep(1)
         newTerm = input("Enter new term: ")
         if newTerm == "done":
             break
@@ -206,7 +209,9 @@ def createFlashcardSet():
         # Add new card to deck.
         fillCardDeck(newTerm, newDefinition)
     # Change path to folder containing flashcards.
-    os.chdir('./TerminalFlashcards')
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(dir_path + "/Flashcards")
     setTitle = input("\nEnter a title for this flashcard set: ")
     # Add new flashcard deck to folder.
     createCardDeck(setTitle)
@@ -215,15 +220,14 @@ def createFlashcardSet():
 
 
 # function name: showCardDecks()
-# parameters: TerminalFlashcards
+# parameters: Flashcards
 # application:    Prints flashcard set file names.
 # output: NA
 # function is called by: __main__
-def showCardDecks(TerminalFlashcards):
-    fileList = getCardDeckFiles(TerminalFlashcards)
+def showCardDecks(Flashcards):
+    fileList = getCardDeckFiles(Flashcards)
     for fileName in fileList:
         print(fileName)
-        time.sleep(0.2)
 
 
 # function name: gameTerminal()
@@ -235,30 +239,21 @@ def showCardDecks(TerminalFlashcards):
 
 def gameTerminal():
     print("Here are your available flashcard sets: \n")
-    time.sleep(.5)
-    #show user all JSON files stored in /TerminalFlashcards
-    showCardDecks("TerminalFlashcards")
-    time.sleep(1)
+    #show user all JSON files stored in /Flashcards
+    showCardDecks("Flashcards")
     file = input("\nSelect a set for the quiz by entering its full name as shown\
  above, then hit 'Enter': \n")
     startGame(file)
-    time.sleep(.5)
     print("\nTo end the quiz, enter 'done'.\n")
-    time.sleep(.5)
     keepPlaying = True
     # If user enters 'done' in quizTerm(), False gets triggered to break While loop.
     while keepPlaying:
         keepPlaying = quizTerm()
-    time.sleep(.5)
     print("\nThanks for playing!")
 
 # __main__ runs when the user runs quizFunctions.py in Terminal.
 
 if __name__=="__main__":
-    time.sleep(.5)
     print("\nWelcome to the Language Learner's Vocab Quiz!\n")
-    time.sleep(.5)
     createFlashcardSet()
-    time.sleep(.5)
     gameTerminal()
-    time.sleep(1)
