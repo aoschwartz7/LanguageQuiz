@@ -90,7 +90,7 @@ def quizCardDeckFolders():
     # Fix the pathway to the correct directory.
     except:
         # TODO: configure path
-        os.chdir("/Users/alecschwartz/Desktop/workspace/VocabQuiz")
+        # os.chdir("../app")
         cardDeckFolders = getCardDeckFolders()
         return render_template('quizCardDeckFolders.html',
             folders=cardDeckFolders
